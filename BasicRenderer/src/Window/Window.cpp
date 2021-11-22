@@ -1,0 +1,288 @@
+#include "../PrecompiledHeaders/stdafx.h"
+#include "Window.h"
+
+namespace dx11
+{
+// Constructors and Destructor:
+
+	Window::Window( int32 width, int32 height, const char* name )
+	{
+	// Calculate Window size based on desired client region size:
+
+		HWND desktop_window = GetDesktopWindow();
+
+		RECT desktop_rect = { 0 };
+
+		GetWindowRect(desktop_window, &desktop_rect );
+
+		RECT window_rect  = { 0 };
+
+		window_rect.left   = desktop_rect.right  / 4;
+		window_rect.right  = desktop_rect.right  / 2;
+		window_rect.top    = desktop_rect.bottom / 4;
+		window_rect.bottom = desktop_rect.bottom / 2;
+
+		if ( !( AdjustWindowRect(&window_rect, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE) ) )
+		{
+			WINDOW_EXCEPT_LAST_ERROR();
+		}
+;
+	// Create Window and get hWnd:
+
+		m_hWnd = CreateWindowA(WindowClass::GetName(),
+			                   name,
+			                   WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
+//			                   window_rect.left,  window_rect.top, 
+	                           CW_USEDEFAULT, CW_USEDEFAULT,
+			                   window_rect.right, window_rect.bottom,
+			                   nullptr,
+			                   nullptr,
+			                   WindowClass::GetInstance(),
+			                   this);
+
+		if ( m_hWnd == nullptr )
+		{
+			WINDOW_EXCEPT_LAST_ERROR();
+		}
+
+	// Show Window:
+
+		ShowWindow( m_hWnd, SW_SHOWDEFAULT );
+	}
+
+	Window::~Window()
+	{
+		DestroyWindow( m_hWnd );
+	}
+
+
+// Functions:
+
+	//
+
+
+// Accessors:
+
+
+	//
+
+
+// Modifiers:
+
+	void Window::SetTitle(const std::string& title)
+	{
+		if ( SetWindowTextA( m_hWnd, title.c_str() ) == 0 )
+		{
+			WINDOW_EXCEPT_LAST_ERROR();
+		}
+	}
+
+// Private Functions:
+
+	LRESULT __stdcall Window::HandleMessageSetup(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) noexcept
+	{
+	// Use create parameter passed in from CreateWindow() to store Window class pointer:
+
+		if ( message == WM_NCCREATE )
+		{
+		// Extract pointer to Window class from creation data:
+
+			const CREATESTRUCTA* const pCreate = reinterpret_cast<CREATESTRUCTA*>( lParam );
+
+			Window* const pWindow = static_cast<Window*>( pCreate->lpCreateParams );
+
+		// Set WinAPI manager user data to store pointer to Window class:
+
+			SetWindowLongPtrA( hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>( pWindow ) );
+
+		// Set message proc to normal (non-setup) handler now that setup us finished:
+
+			SetWindowLongPtrA( hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>( &Window::HandleMessageThunk ));
+
+		// Forwad message to Window class handler:
+
+			return pWindow->HandleMessage( hWnd, message, wParam, lParam );
+		}
+
+	// If we get a message before the WM_NCCREATE message, handle with default handler:
+
+		return DefWindowProcA( hWnd, message, wParam, lParam );
+	}
+
+	LRESULT __stdcall Window::HandleMessageThunk(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) noexcept
+	{
+	// Rertrieve pointer to Window class:
+
+		Window* const pWindow = reinterpret_cast<Window*>( GetWindowLongPtrA( hWnd, GWLP_USERDATA) );
+
+	// Firward message to Window class handler:
+
+		return pWindow->HandleMessage( hWnd, message, wParam, lParam );
+	}
+
+	LRESULT Window::HandleMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) noexcept
+	{
+		switch ( message )
+		{
+		// We do not want the DefWindowProc to handle this message because
+		// We want out destructor to destroy the window, se return 0 instread:
+
+			case WM_CLOSE:
+			{
+				PostQuitMessage( 0 );
+
+				return 0;
+			}
+
+			// ---------------- Keyboard Messages ---------------- Begin:
+
+		// Clear key state when window loses focus to prevent input getting
+		// stacked into last known state:
+
+			case WM_KILLFOCUS:
+			{
+				keyboard.ClearState();
+
+				break;
+			}
+
+			case WM_KEYDOWN: // Fall through
+			case WM_SYSKEYDOWN:
+			{
+				if ( !(lParam & 0x40000000) || keyboard.AutorepeatIsEnabled() )
+				{
+					keyboard.OnKeyPress(static_cast<uint8>(wParam));
+				}				
+
+				break;
+			}
+
+			case WM_KEYUP: // Fall through
+			case WM_SYSKEYUP:
+			{
+				keyboard.OnKeyRelease( static_cast<uint8>(wParam) );
+
+				break;
+			}
+
+			case WM_CHAR:
+			{
+				keyboard.OnChar( static_cast<uint8>(wParam) );
+
+				break;
+			}
+
+			// ---------------- Keyboard Messages ---------------- End.
+
+			// ---------------- Mouse Messages ---------------- Begin:
+
+			case WM_MOUSEMOVE:
+			{
+				POINTS point = MAKEPOINTS( lParam );
+
+				mouse.OnMouseMove( point.x, point.y );
+
+				break;
+			}
+
+			case WM_LBUTTONDOWN:
+			{
+				const POINTS point = MAKEPOINTS( lParam );
+
+				mouse.OnLeftPress( point.x, point.y );
+
+				break;
+			}
+
+			case WM_LBUTTONUP:
+			{
+				const POINTS point = MAKEPOINTS( lParam );
+
+				mouse.OnLeftRelease( point.x, point.y );
+
+				break;
+			}
+
+			case WM_RBUTTONDOWN:
+			{
+				const POINTS point = MAKEPOINTS( lParam );
+
+				mouse.OnRightPress( point.x, point.y );
+
+				break;
+			}
+
+			case WM_RBUTTONUP:
+			{
+				const POINTS point = MAKEPOINTS( lParam );
+
+				mouse.OnRightRelease( point.x, point.y );
+
+				break;
+			}
+
+			case WM_MOUSEWHEEL:
+			{
+				const POINTS point = MAKEPOINTS( lParam );
+
+				if ( GET_WHEEL_DELTA_WPARAM( wParam ) > 0 )
+				{
+					mouse.OnWheelUp( point.x, point.y );
+				}
+				else if ( GET_WHEEL_DELTA_WPARAM( wParam ) < 0 )
+				{
+					mouse.OnWheelDown( point.x, point.y );
+				}
+
+				break;
+			}
+
+			// ---------------- Mouse Messages ---------------- End.
+		}
+
+		return DefWindowProcA( hWnd, message, wParam, lParam );
+	}
+
+
+// ---------------------------------------- WindowClass ---------------------------------------- :
+
+// Constructors and Destructor:
+
+	Window::WindowClass Window::WindowClass::wndClass;
+
+	Window::WindowClass::WindowClass() noexcept
+		: hInstance( GetModuleHandleA( nullptr ) )
+	{
+		WNDCLASSEXA window_class = { 0 };
+
+		window_class.cbSize        = sizeof( window_class );
+		window_class.style         = CS_OWNDC;
+		window_class.lpfnWndProc   = HandleMessageSetup;
+		window_class.cbClsExtra    = 0;
+		window_class.cbWndExtra    = 0;
+		window_class.hInstance     = GetInstance();
+		window_class.hIcon         = static_cast<HICON>(LoadImageA( hInstance, MAKEINTRESOURCEA( IDI_ICON1 ), IMAGE_ICON, 48, 48, 0 ));
+		window_class.hCursor       = nullptr;
+		window_class.hbrBackground = nullptr;
+		window_class.hIconSm       = static_cast<HICON>(LoadImageA( hInstance, MAKEINTRESOURCEA( IDI_ICON1 ), IMAGE_ICON, 16, 16, 0 ));
+		window_class.lpszMenuName  = nullptr;
+		window_class.lpszClassName = GetName();
+		
+		RegisterClassExA( &window_class );
+	}
+
+	Window::WindowClass::~WindowClass()
+	{
+		UnregisterClassA( wndClassName, GetInstance() );
+	}
+
+	const char* Window::WindowClass::GetName() noexcept
+	{
+		return wndClassName;
+	}
+
+	HINSTANCE Window::WindowClass::GetInstance() noexcept
+	{
+		return wndClass.hInstance;
+	}
+}
