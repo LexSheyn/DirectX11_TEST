@@ -52,7 +52,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON                    "C:\\VisualStudioProjects\\DirectX11_TEST\\Resources\\Joker-pixel-art_48x48.ico"
+IDI_ICON1               ICON                    "../Resources/Joker-pixel-art_48x48.ico"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
