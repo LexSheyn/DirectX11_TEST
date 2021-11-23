@@ -67,6 +67,8 @@ namespace dx11
 
 		void OnWheelDown( int32 _x, int32 _y )    noexcept;
 
+		void OnWheelDelta( int32 _x, int32 _y, int32 _delta )   noexcept;
+
 		void TrimBuffer()                         noexcept;
 
 	// Variables:
@@ -81,6 +83,8 @@ namespace dx11
 	//	bool8 b_LeftIsPressed  = false;
 	//	bool8 b_RightIsPressed = false;
 	//	bool8 b_IsInWindow     = false;
+
+	//	int32 m_WheelDeltaCarry = 0;
 
 		std::queue<MouseEvent> m_Buffer;
 	};

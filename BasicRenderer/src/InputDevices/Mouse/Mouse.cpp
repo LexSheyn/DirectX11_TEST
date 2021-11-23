@@ -105,6 +105,27 @@ namespace dx11
 		this->TrimBuffer();
 	}
 
+	void Mouse::OnWheelDelta(int32 _x, int32 _y, int32 _delta) noexcept
+	{
+		m_WheelDeltaCarry += _delta;
+
+	// Generate events every 120 ( WHEEL_DELTA ):
+
+		while ( m_WheelDeltaCarry >= WHEEL_DELTA )
+		{
+			m_WheelDeltaCarry -= WHEEL_DELTA;
+
+			this->OnWheelUp( _x, _y );
+		}
+
+		while ( m_WheelDeltaCarry <= -WHEEL_DELTA )
+		{
+			m_WheelDeltaCarry += WHEEL_DELTA;
+
+			this->OnWheelDown( _x, _y );
+		}
+	}
+
 	void Mouse::TrimBuffer() noexcept
 	{
 		while ( m_Buffer.size() > m_BufferSize )

@@ -38,6 +38,8 @@ namespace dx11
 		bool8 b_LeftIsPressed  = false;
 		bool8 b_RightIsPressed = false;
 		bool8 b_IsInWindow     = false;
+
+		int32 m_WheelDeltaCarry = 0;
 	};
 }
 

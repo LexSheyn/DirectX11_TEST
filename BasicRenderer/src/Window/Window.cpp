@@ -256,14 +256,9 @@ namespace dx11
 			{
 				const POINTS point = MAKEPOINTS( lParam );
 
-				if ( GET_WHEEL_DELTA_WPARAM( wParam ) > 0 )
-				{
-					mouse.OnWheelUp( point.x, point.y );
-				}
-				else if ( GET_WHEEL_DELTA_WPARAM( wParam ) < 0 )
-				{
-					mouse.OnWheelDown( point.x, point.y );
-				}
+				const int32 delta = GET_WHEEL_DELTA_WPARAM( wParam );
+
+				mouse.OnWheelDelta( point.x, point.y, delta );
 
 				break;
 			}
