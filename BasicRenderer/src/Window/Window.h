@@ -8,6 +8,8 @@
 #include "../InputDevices/Keyboard/Keyboard.h"
 #include "../InputDevices/Mouse/Mouse.h"
 
+#include "../Graphics/Graphics.h"
+
 namespace dx11
 {
 	class Window
@@ -27,7 +29,7 @@ namespace dx11
 
 	// Accessors:
 
-		//
+		inline Graphics& GetGraphics() { return *m_pGraphics; }
 
 	// Modifiers:
 
@@ -37,7 +39,7 @@ namespace dx11
 
 		Window& operator=( const Window& ) = delete;
 
-	// Input devices:
+	// Components:
 
 		Keyboard keyboard;
 		Mouse    mouse;
@@ -59,9 +61,7 @@ namespace dx11
 
 		HWND m_hWnd;
 
-	// WindowException:
-
-	//	WindowException m_Exception;
+		std::unique_ptr<Graphics> m_pGraphics;
 
 	// Private WindowClass:
 

@@ -47,9 +47,14 @@ namespace dx11
 			WINDOW_EXCEPT_LAST_ERROR();
 		}
 
+	// Newly created window start of as hidden.
 	// Show Window:
 
 		ShowWindow( m_hWnd, SW_SHOWDEFAULT );
+
+	// Create graphics object:
+
+		m_pGraphics = std::make_unique<Graphics>( m_hWnd );
 	}
 
 	Window::~Window()
@@ -90,7 +95,6 @@ namespace dx11
 
 
 // Accessors:
-
 
 	//
 
