@@ -54,7 +54,7 @@ namespace dx11
 
 	// Create graphics object:
 
-		m_pGraphics = std::make_unique<Graphics>( m_hWnd );
+		m_pRenderSystem = std::make_unique<RenderSystem>( m_hWnd );
 	}
 
 	Window::~Window()

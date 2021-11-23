@@ -43,6 +43,8 @@ namespace dx11
 
 	void Application::DoFrame()
 	{
+	// Elapsed time in the window title:
+
 		const float time = m_Timer.Peek();
 
 		std::ostringstream out_str_stream;
@@ -50,6 +52,14 @@ namespace dx11
 		out_str_stream << "Time elapsed: " << std::setprecision( 1 ) << std::fixed << time << "s.";
 
 		m_Window.SetTitle( out_str_stream.str() );
+
+	// Clearing buffer with the red hue depends on time elapsed:
+
+		const float color = std::sin( m_Timer.Peek() ) / 2.0f + 0.5f;
+
+		m_Window.GetRenderSystem().ClearBuffer( color, 0.0f, 0.0f );
+
+		m_Window.GetRenderSystem().EndFrame();
 	}
 
 }

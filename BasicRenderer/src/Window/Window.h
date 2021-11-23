@@ -8,7 +8,7 @@
 #include "../InputDevices/Keyboard/Keyboard.h"
 #include "../InputDevices/Mouse/Mouse.h"
 
-#include "../Graphics/Graphics.h"
+#include "../Graphics/RenderSystem.h"
 
 namespace dx11
 {
@@ -29,7 +29,7 @@ namespace dx11
 
 	// Accessors:
 
-		inline Graphics& GetGraphics() { return *m_pGraphics; }
+		inline RenderSystem& GetRenderSystem() { return *m_pRenderSystem; }
 
 	// Modifiers:
 
@@ -61,7 +61,7 @@ namespace dx11
 
 		HWND m_hWnd;
 
-		std::unique_ptr<Graphics> m_pGraphics;
+		std::unique_ptr<RenderSystem> m_pRenderSystem;
 
 	// Private WindowClass:
 

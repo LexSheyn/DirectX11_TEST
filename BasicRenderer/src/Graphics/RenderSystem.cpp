@@ -1,11 +1,11 @@
 #include "../PrecompiledHeaders/stdafx.h"
-#include "Graphics.h"
+#include "RenderSystem.h"
 
 namespace dx11
 {
 // Constructors and Destructors:
 
-	Graphics::Graphics(HWND hWnd)
+	RenderSystem::RenderSystem(HWND hWnd)
 	{
 	// Create spaw chain descriptor:
 
@@ -41,24 +41,57 @@ namespace dx11
 			&m_pDevice,
 			nullptr,
 			&m_pContext);
+
+	// Gain access to texture subresource in swap chain (back buffer):
+
+		ID3D11Resource* pBackBuffer = nullptr;
+
+		m_pSwapChain->GetBuffer( 0u, __uuidof( ID3D11Resource ), reinterpret_cast<void**>( &pBackBuffer ) );
+
+		if ( pBackBuffer != nullptr )
+		{
+			m_pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &m_pRenderTargetView);
+		}
+
+		pBackBuffer->Release();
 	}
 
-	Graphics::~Graphics()
+	RenderSystem::~RenderSystem()
 	{
-		if (m_pDevice != nullptr)
+		if ( m_pDevice != nullptr) 
 		{
 			m_pDevice->Release();
 		}
 
-		if (m_pSwapChain != nullptr)
+		if ( m_pSwapChain != nullptr )
 		{
 			m_pSwapChain->Release();
 		}
 		
-		if (m_pContext != nullptr)
+		if ( m_pContext != nullptr )
 		{
 			m_pContext->Release();
-		}		
+		}
+
+		if ( m_pRenderTargetView != nullptr )
+		{
+			m_pRenderTargetView->Release();
+		}
+	}
+
+
+// Functions:
+
+	void RenderSystem::EndFrame()
+	{
+		m_pSwapChain->Present( 1u, 0u );
+	}
+
+	void RenderSystem::ClearBuffer(float32 red, float32 green, float32 blue) noexcept
+	{
+		const float color[] = { red, green, blue, 1.0f };
+
+		m_pContext->ClearRenderTargetView( m_pRenderTargetView, color );
 	}
 
 }
