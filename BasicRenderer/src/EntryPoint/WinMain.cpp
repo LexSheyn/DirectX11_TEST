@@ -1,6 +1,6 @@
 #include "../PrecompiledHeaders/stdafx.h"
 
-#include "../Window/Window.h"
+#include "../Application/Application.h"
 
 int32 __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR pCmdLine, _In_ int32 nCmdShow)
 {
@@ -8,83 +8,7 @@ int32 __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 
 	try
 	{
-		dx11::Window window(1050, 450, "DirectX11 Test Window");
-
-		// Message pump:
-
-		MSG message;
-
-		// MOUSE TEST
-
-		int32 mouse_scroll_score = 0;
-
-		while (GetMessageA(&message, nullptr, 0u, 0u) > 0)
-		{
-			TranslateMessage(&message);
-
-			DispatchMessageA(&message);
-			
-			while ( !window.mouse.IsEmpty() )
-			{
-				const auto mouse_event = window.mouse.Read();
-
-				switch ( mouse_event.GetType() )
-				{
-					case dx11::MouseEvent::Type::Leave:
-					{
-						window.SetTitle("Mouse gone!");
-
-						break;
-					}
-
-					case dx11::MouseEvent::Type::Enter:
-					{
-						window.SetTitle("Mouse here!");
-
-						break;
-					}
-
-					case dx11::MouseEvent::Type::Move:
-					{
-						std::stringstream out_str_stream;
-
-						out_str_stream << "Mouse moved to: [" << window.mouse.GetX() << ":" << window.mouse.GetY() << "]";
-
-					//	window.SetTitle( out_str_stream.str() );
-
-						break;
-					}
-
-					case dx11::MouseEvent::Type::WheelUp:
-					{
-						mouse_scroll_score += 1;
-
-						std::stringstream out_str_stream;
-
-						out_str_stream << "Mouse scroll Up: " << mouse_scroll_score;
-
-						window.SetTitle(out_str_stream.str());
-
-						break;
-					}
-
-					case dx11::MouseEvent::Type::WheelDown:
-					{
-						mouse_scroll_score -= 1;
-
-						std::stringstream out_str_stream;
-
-						out_str_stream << "Mouse scroll Down: " << mouse_scroll_score;
-
-						window.SetTitle( out_str_stream.str() );
-
-						break;
-					}
-				}
-			}
-		}
-
-		return static_cast<int32>(message.wParam);
+		return dx11::Application().Run();
 	}
 	catch ( const dx11::Exception& exception )
 	{

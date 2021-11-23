@@ -23,7 +23,7 @@ namespace dx11
 
 	// Functions:
 
-		//
+		static std::optional<int32> ProcessMessages() noexcept;
 
 	// Accessors:
 

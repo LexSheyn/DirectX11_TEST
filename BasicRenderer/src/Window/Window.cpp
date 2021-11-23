@@ -60,7 +60,33 @@ namespace dx11
 
 // Functions:
 
-	//
+	std::optional<int32> Window::ProcessMessages() noexcept
+	{
+		MSG msg;
+
+	// While queue has messages, remove and dispatch them (but do not block on empty queue):
+
+		while ( PeekMessageA( &msg, nullptr, 0, 0, PM_REMOVE ) )
+		{
+		// Check for quit because peekmessage does not signal this via return value:
+
+			if ( msg.message == WM_QUIT )
+			{
+			// Return optional wrapping int (arg to PostQuitMessage is in wparam) signals quit:
+
+				return static_cast<int32>( msg.wParam );
+			}
+
+		// TranslateMessage will post auxilliary WM_CHAR messages from key msgs:
+
+			TranslateMessage( &msg );
+			DispatchMessageA( &msg );
+		}
+
+	// Return empty optional when not quitting app:
+
+		return {};
+	}
 
 
 // Accessors:

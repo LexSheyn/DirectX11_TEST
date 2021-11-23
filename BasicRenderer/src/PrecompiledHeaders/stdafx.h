@@ -44,5 +44,6 @@ typedef double             float64;
 #include <exception>
 #include <queue>
 #include <bitset>
+#include <optional>
 
 #endif // STDAFX_H
