@@ -11,15 +11,17 @@ namespace dx11
 
 	// Event Types:
 
-		enum class Type
+		enum class Type : int32
 		{
-			LPress,
+			LPress = 0,
 			LRelease,
 			RPress,
 			RRelease,
 			WheelUp,
 			WheelDown,
 			Move,
+			Enter,
+			Leave,
 			Invalid
 		};
 

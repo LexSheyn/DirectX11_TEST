@@ -22,6 +22,8 @@ namespace dx11
 
 		virtual const int32& GetY() const noexcept = 0;
 
+		virtual const bool8& IsInWindow() const noexcept = 0;
+
 		virtual const bool8& LeftIsPressed()  const noexcept = 0;
 
 		virtual const bool8& RightIsPressed() const noexcept = 0;
@@ -35,6 +37,7 @@ namespace dx11
 
 		bool8 b_LeftIsPressed  = false;
 		bool8 b_RightIsPressed = false;
+		bool8 b_IsInWindow     = false;
 	};
 }
 

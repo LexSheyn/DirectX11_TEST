@@ -37,6 +37,24 @@ namespace dx11
 		this->TrimBuffer();
 	}
 
+	void Mouse::OnMouseLeave() noexcept
+	{
+		b_IsInWindow = false;
+
+		m_Buffer.push( MouseEvent( MouseEvent::Type::Leave, *this ) );
+
+		this->TrimBuffer();
+	}
+
+	void Mouse::OnMouseEnter() noexcept
+	{
+		b_IsInWindow = true;
+
+		m_Buffer.push( MouseEvent( MouseEvent::Type::Enter, *this ) );
+
+		this->TrimBuffer();
+	}
+
 	void Mouse::OnLeftPress(int32 _x, int32 _y) noexcept
 	{
 		b_LeftIsPressed = true;

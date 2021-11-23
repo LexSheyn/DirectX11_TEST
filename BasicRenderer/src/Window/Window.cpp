@@ -6,6 +6,8 @@ namespace dx11
 // Constructors and Destructor:
 
 	Window::Window( int32 width, int32 height, const char* name )
+		: m_Width( width ),
+		  m_Height( height )
 	{
 	// Calculate Window size based on desired client region size:
 
@@ -34,7 +36,7 @@ namespace dx11
 			                   WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
 //			                   window_rect.left,  window_rect.top, 
 	                           CW_USEDEFAULT, CW_USEDEFAULT,
-			                   window_rect.right, window_rect.bottom,
+			                   m_Width, m_Height,
 			                   nullptr,
 			                   nullptr,
 			                   WindowClass::GetInstance(),
@@ -178,9 +180,38 @@ namespace dx11
 
 			case WM_MOUSEMOVE:
 			{
-				POINTS point = MAKEPOINTS( lParam );
+				const POINTS point = MAKEPOINTS( lParam );
+				
+				if ( point.x >= 0 && point.x < m_Width && point.y >= 0 && point.y < m_Height )
+				{
+				// In client region -> log move and log enter + capture mouse (if not previous...):
 
-				mouse.OnMouseMove( point.x, point.y );
+					mouse.OnMouseMove( point.x, point.y );
+
+					if ( !mouse.IsInWindow() )
+					{
+						SetCapture( m_hWnd );
+
+						mouse.OnMouseEnter();
+					}
+				}
+				else
+				{
+				// Not in client region -> log move / maintain capture if bottom down:
+
+					if ( wParam & ( MK_LBUTTON | MK_RBUTTON ) )
+					{
+						mouse.OnMouseMove( point.x, point.y );
+					}
+					else
+					{
+					// If button up -> release capture / log event for leaving:
+
+						ReleaseCapture();
+
+						mouse.OnMouseLeave();
+					}
+				}
 
 				break;
 			}

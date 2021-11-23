@@ -54,8 +54,8 @@ namespace dx11
 
 	// Variables:
 
-	//	int32 m_Width;
-	//	int32 m_Height;
+		int32 m_Width;
+		int32 m_Height;
 
 		HWND m_hWnd;
 

@@ -8,7 +8,7 @@ int32 __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 
 	try
 	{
-		dx11::Window window(800, 300, "DirectX11 Test Window");
+		dx11::Window window(1050, 450, "DirectX11 Test Window");
 
 		// Message pump:
 
@@ -26,13 +26,21 @@ int32 __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 			{
 				const auto mouse_event = window.mouse.Read();
 
-				if ( mouse_event.GetType() == dx11::MouseEvent::Type::Move )
+				switch ( mouse_event.GetType() )
 				{
-					std::stringstream out_str_stream;
+					case dx11::MouseEvent::Type::Leave:
+					{
+						window.SetTitle("Mouse gone!");
 
-					out_str_stream << "Mouse position: [" << mouse_event.GetX() << ":" << mouse_event.GetY() << "]";
+						break;
+					}
 
-					window.SetTitle( out_str_stream.str() );
+					case dx11::MouseEvent::Type::Enter:
+					{
+						window.SetTitle("Mouse here!");
+
+						break;
+					}
 				}
 			}
 		}

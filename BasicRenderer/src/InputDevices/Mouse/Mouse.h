@@ -31,23 +31,29 @@ namespace dx11
 
 	// Accessors:
 
-		std::pair<int32, int32> GetPosition() const noexcept { return { x, y }; }
+		inline std::pair<int32, int32> GetPosition() const noexcept { return { x, y }; }
 
-		const int32& GetX() const noexcept override { return x; }
+		inline const int32& GetX() const noexcept override { return x; }
 
-		const int32& GetY() const noexcept override { return y; }
+		inline const int32& GetY() const noexcept override { return y; }
 
-		const bool8& LeftIsPressed()  const noexcept override { return b_LeftIsPressed; }
+		inline const bool8& IsInWindow() const noexcept override { return b_IsInWindow; }
 
-		const bool8& RightIsPressed() const noexcept override { return b_RightIsPressed; }
+		inline const bool8& LeftIsPressed()  const noexcept override { return b_LeftIsPressed; }
 
-		bool8 IsEmpty() const noexcept { return m_Buffer.empty(); }
+		inline const bool8& RightIsPressed() const noexcept override { return b_RightIsPressed; }
+
+		inline bool8 IsEmpty() const noexcept { return m_Buffer.empty(); }
 
 	private:
 
 	// Private Functions:
 
 		void OnMouseMove( int32 _x, int32 _y )    noexcept;
+
+		void OnMouseLeave()                       noexcept;
+
+		void OnMouseEnter()                       noexcept;
 
 		void OnLeftPress( int32 _x, int32 _y )    noexcept;
 
@@ -74,6 +80,7 @@ namespace dx11
 	//
 	//	bool8 b_LeftIsPressed  = false;
 	//	bool8 b_RightIsPressed = false;
+	//	bool8 b_IsInWindow     = false;
 
 		std::queue<MouseEvent> m_Buffer;
 	};
