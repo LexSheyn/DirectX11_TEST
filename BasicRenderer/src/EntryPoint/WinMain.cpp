@@ -41,6 +41,17 @@ int32 __stdcall WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstan
 
 						break;
 					}
+
+					case dx11::MouseEvent::Type::Move:
+					{
+						std::stringstream out_str_stream;
+
+						out_str_stream << "Mouse moved to: [" << window.mouse.GetX() << ":" << window.mouse.GetY() << "]";
+
+						window.SetTitle( out_str_stream.str() );
+
+						break;
+					}
 				}
 			}
 		}

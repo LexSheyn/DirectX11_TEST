@@ -19,10 +19,10 @@ namespace dx11
 
 		RECT window_rect  = { 0 };
 
-		window_rect.left   = desktop_rect.right  / 4;
-		window_rect.right  = desktop_rect.right  / 2;
-		window_rect.top    = desktop_rect.bottom / 4;
-		window_rect.bottom = desktop_rect.bottom / 2;
+		window_rect.left   = 100u;
+		window_rect.right  = width + window_rect.left;
+		window_rect.top    = 100u;
+		window_rect.bottom = height + window_rect.top;
 
 		if ( !( AdjustWindowRect(&window_rect, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE) ) )
 		{
@@ -36,7 +36,7 @@ namespace dx11
 			                   WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
 //			                   window_rect.left,  window_rect.top, 
 	                           CW_USEDEFAULT, CW_USEDEFAULT,
-			                   m_Width, m_Height,
+			                   window_rect.right - window_rect.left, window_rect.bottom - window_rect.top,
 			                   nullptr,
 			                   nullptr,
 			                   WindowClass::GetInstance(),
@@ -182,7 +182,7 @@ namespace dx11
 			{
 				const POINTS point = MAKEPOINTS( lParam );
 				
-				if ( point.x >= 0 && point.x < m_Width && point.y >= 0 && point.y < m_Height )
+				if ( ( point.x >= 0 && point.x < m_Width ) && ( point.y >= 0 && point.y < m_Height ) )
 				{
 				// In client region -> log move and log enter + capture mouse (if not previous...):
 
