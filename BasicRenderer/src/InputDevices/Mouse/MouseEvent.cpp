@@ -14,7 +14,7 @@ namespace dx11
 	{
 	}
 
-	MouseEvent::MouseEvent(Type type, const BasicMouse& parent) noexcept
+	MouseEvent::MouseEvent(Type type, const IMouse& parent) noexcept
 		: type( type ),
 		  b_LeftIsPressed(  parent.LeftIsPressed()  ),
 		  b_RightIsPressed( parent.RightIsPressed() ),

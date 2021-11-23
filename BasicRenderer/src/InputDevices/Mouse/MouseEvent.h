@@ -1,7 +1,7 @@
 #ifndef MOUSEEVENT_H
 #define MOUSEEVENT_H
 
-#include "Base/BasicMouse.h"
+#include "Interface/IMouse.h"
 
 namespace dx11
 {
@@ -28,7 +28,7 @@ namespace dx11
 	// Constructors and Destructor:
 
 		MouseEvent() noexcept;
-		MouseEvent( Type type, const BasicMouse& parent ) noexcept;
+		MouseEvent( Type type, const IMouse& parent ) noexcept;
 
 		~MouseEvent();
 

@@ -1,13 +1,13 @@
 #ifndef MOUSE_H
 #define MOUSE_H
 
-#include "Base/BasicMouse.h"
+#include "Interface/IMouse.h"
 
 #include "MouseEvent.h"
 
 namespace dx11
 {
-	class Mouse : public BasicMouse
+	class Mouse : public IMouse
 	{
 		friend class MouseEvent;
 		friend class Window;
@@ -75,16 +75,14 @@ namespace dx11
 
 		static constexpr uint32 m_BufferSize = 16u;
 
-	// Inherited from BasicMouse:
+		int32 x = 0;
+		int32 y = 0;
 
-	//	int32 x = 0;
-	//	int32 y = 0;
-	//
-	//	bool8 b_LeftIsPressed  = false;
-	//	bool8 b_RightIsPressed = false;
-	//	bool8 b_IsInWindow     = false;
+		bool8 b_LeftIsPressed = false;
+		bool8 b_RightIsPressed = false;
+		bool8 b_IsInWindow = false;
 
-	//	int32 m_WheelDeltaCarry = 0;
+		int32 m_WheelDeltaCarry = 0;
 
 		std::queue<MouseEvent> m_Buffer;
 	};

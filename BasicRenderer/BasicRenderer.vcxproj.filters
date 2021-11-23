@@ -45,7 +45,7 @@
     <ClCompile Include="src\InputDevices\Mouse\MouseEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InputDevices\Mouse\Base\BasicMouse.cpp">
+    <ClCompile Include="src\InputDevices\Mouse\Interface\IMouse.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Application\Application.cpp">
@@ -89,7 +89,7 @@
     <ClInclude Include="src\InputDevices\Mouse\MouseEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\InputDevices\Mouse\Base\BasicMouse.h">
+    <ClInclude Include="src\InputDevices\Mouse\Interface\IMouse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
