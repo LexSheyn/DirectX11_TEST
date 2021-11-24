@@ -24,7 +24,7 @@ typedef double             float64;
 #define Pi_float64 3.14159265358979323846
 
 // Windows 10 x64
-#include "Win10/win_setup.h"
+//#include "Win10/win_setup.h"
 
 // DirectX 11
 #include "Win10/directx_setup.h"

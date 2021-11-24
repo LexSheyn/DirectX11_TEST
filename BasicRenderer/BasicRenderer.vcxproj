@@ -95,6 +95,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application\Application.cpp" />
+    <ClCompile Include="src\PrecompiledHeaders\DirectxError\dxerr.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="src\Exception\Exception.cpp" />
     <ClCompile Include="src\Graphics\RenderSystem.cpp" />
     <ClCompile Include="src\InputDevices\Mouse\Interface\IMouse.cpp">
@@ -132,6 +136,7 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\Application\Application.h" />
+    <ClInclude Include="src\PrecompiledHeaders\DirectxError\dxerr.h" />
     <ClInclude Include="src\Exception\Exception.h" />
     <ClInclude Include="src\Graphics\RenderSystem.h" />
     <ClInclude Include="src\InputDevices\Mouse\Interface\IMouse.h" />
@@ -152,6 +157,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resources\Joker-pixel-art_48x48.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\PrecompiledHeaders\DirectxError\DXGetErrorDescription.inl" />
+    <None Include="src\PrecompiledHeaders\DirectxError\DXGetErrorString.inl" />
+    <None Include="src\PrecompiledHeaders\DirectxError\DXTrace.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
