@@ -4,6 +4,7 @@
 #include "../../resource.h"
 
 #include "WindowException.h"
+#include "GraphicsException.h"
 
 #include "../InputDevices/Keyboard/Keyboard.h"
 #include "../InputDevices/Mouse/Mouse.h"
@@ -29,7 +30,7 @@ namespace dx11
 
 	// Accessors:
 
-		inline RenderSystem& GetRenderSystem() { return *m_pRenderSystem; }
+		RenderSystem& GetRenderSystem();
 
 	// Modifiers:
 
@@ -64,6 +65,7 @@ namespace dx11
 		std::unique_ptr<RenderSystem> m_pRenderSystem;
 
 		WindowException m_WindowException;
+		GraphicsException m_GraphicsException;
 
 	// Private WindowClass:
 

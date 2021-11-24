@@ -32,6 +32,7 @@ namespace dx11
 	// Exceptions:
 
 		HrException m_HrException;
+		DeviceRemovedException m_DeviceRemovedException;
 
 	// Variables:
 

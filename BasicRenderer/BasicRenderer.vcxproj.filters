@@ -66,6 +66,9 @@
     <ClCompile Include="src\Graphics\DeviceRemovedException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Window\GraphicsException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\PrecompiledHeaders\stdafx.h">
@@ -123,6 +126,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Graphics\DeviceRemovedException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window\GraphicsException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

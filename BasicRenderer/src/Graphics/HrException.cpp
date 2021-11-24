@@ -3,7 +3,7 @@
 
 namespace dx11
 {
-// Constructor:
+// Constructors and Destructor:
 
 	HrException::HrException()
 		: m_hResult( 0 )
@@ -31,27 +31,42 @@ namespace dx11
 
 	const char* HrException::what() const noexcept
 	{
-		return nullptr;
+		std::ostringstream out_str_stream;
+
+		out_str_stream << this->GetType()
+			<< "\n" << "[Error code]: 0x" << std::hex << std::uppercase << this->GetErrorCode()
+			<< std::dec << " (" << static_cast<uint64>(this->GetErrorCode()) << ")"
+			<< "\n" << "[Error string]: " << this->GetErrorString()
+			<< "\n" << "[Description]: " << this->GetErrorDescription()
+			<< "\n" << Exception::GetOriginString();
+
+		WhatBuffer = out_str_stream.str();
+
+		return WhatBuffer.c_str();
 	}
 
 	const char* HrException::GetType() const noexcept
 	{
-		return nullptr;
+		return "Render System Exception";
 	}
 
-	HRESULT HrException::GetErrorCode() const noexcept
+	const HRESULT& HrException::GetErrorCode() const noexcept
 	{
-		return E_NOTIMPL;
+		return m_hResult;
 	}
 
 	std::string HrException::GetErrorString() const noexcept
 	{
-		return std::string();
+		return DXGetErrorStringA( m_hResult );
 	}
 
 	std::string HrException::GetErrorDescription() const noexcept
 	{
-		return std::string();
+		char buffer[512];
+
+		DXGetErrorDescriptionA( m_hResult, buffer, sizeof( buffer ) );
+
+		return buffer;
 	}
 
 }

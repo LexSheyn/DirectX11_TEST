@@ -53,7 +53,7 @@ namespace dx11
 
 		ID3D11Resource* pBackBuffer = nullptr;
 
-		m_pSwapChain->GetBuffer( 0u, __uuidof( ID3D11Resource ), reinterpret_cast<void**>( &pBackBuffer ) );
+		m_pSwapChain->GetBuffer( 0u, __uuidof( ID3D11Texture2D ), reinterpret_cast<void**>( &pBackBuffer ) );
 
 		if ( pBackBuffer != nullptr )
 		{
@@ -91,7 +91,19 @@ namespace dx11
 
 	void RenderSystem::EndFrame()
 	{
-		m_pSwapChain->Present( 1u, 0u );
+		HRESULT h_result = 0;
+
+		if( FAILED( m_pSwapChain->Present( 1u, 0u ) ) )
+		{
+			if ( h_result == DXGI_ERROR_DEVICE_REMOVED )
+			{
+				m_DeviceRemovedException.Except( __LINE__, __FILE__ , m_pDevice->GetDeviceRemovedReason() );
+			}
+			else
+			{
+				m_HrException.Except( __LINE__, __FILE__, GetLastError() );
+			}			
+		}
 	}
 
 	void RenderSystem::ClearBuffer(float32 red, float32 green, float32 blue) noexcept

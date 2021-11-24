@@ -17,7 +17,7 @@ namespace dx11
 	{
 	public:
 
-	// Constructor:
+	// Constructors and Destructor:
 
 		HrException();
 		HrException( int32 line, const char* file, HRESULT hResult ) noexcept;
@@ -28,15 +28,15 @@ namespace dx11
 
 	// Accessors:
 
-		const char* what()                const noexcept override;
+		const    char* what()                const noexcept override;
 
-		const char* GetType()             const noexcept override;
+		const    char* GetType()             const noexcept override;
 
-		    HRESULT GetErrorCode()        const noexcept;
+		const HRESULT& GetErrorCode()        const noexcept;
 
-		std::string GetErrorString()      const noexcept;
+		   std::string GetErrorString()      const noexcept;
 
-		std::string GetErrorDescription() const noexcept;
+		   std::string GetErrorDescription() const noexcept;
 
 	private:
 

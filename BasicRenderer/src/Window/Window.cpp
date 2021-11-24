@@ -97,7 +97,15 @@ namespace dx11
 
 // Accessors:
 
-	//
+	RenderSystem& Window::GetRenderSystem()
+	{
+		if ( m_pRenderSystem == nullptr )
+		{
+			m_GraphicsException.Except( __LINE__, __FILE__ );
+		}
+
+		return *m_pRenderSystem;
+	}
 
 
 // Modifiers:
