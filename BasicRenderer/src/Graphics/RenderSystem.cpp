@@ -36,7 +36,7 @@ namespace dx11
 		if ( FAILED (D3D11CreateDeviceAndSwapChain(nullptr,
 			                                       D3D_DRIVER_TYPE_HARDWARE,
 			                                       nullptr,
-			                                       0u,
+			                                       0u,//D3D11_CREATE_DEVICE_DEBUG,
 			                                       nullptr,
 			                                       0u,
 			                                       D3D11_SDK_VERSION,
@@ -101,7 +101,7 @@ namespace dx11
 			}
 			else
 			{
-				m_HrException.Except( __LINE__, __FILE__, GetLastError() );
+				m_HrException.Except( __LINE__, __FILE__, GetLastError());
 			}			
 		}
 	}

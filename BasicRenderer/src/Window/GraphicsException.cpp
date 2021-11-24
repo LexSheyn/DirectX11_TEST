@@ -9,17 +9,17 @@ namespace dx11
 	{
 	}
 
-	GraphicsException::GraphicsException(int32 line, const char* file)
-		: Exception( line, file )
+	GraphicsException::GraphicsException(int32 line, const char* file, HRESULT hResult)
+		: HrException( line, file, hResult )
 	{
 	}
 
 
 // Functions:
 
-	void GraphicsException::Except( int32 line, const char* file )
+	void GraphicsException::Except( int32 line, const char* file, HRESULT hResult )
 	{
-		GraphicsException graphics_exception( line, file );
+		GraphicsException graphics_exception( line, file, hResult );
 
 		throw graphics_exception;
 	}

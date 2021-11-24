@@ -101,7 +101,7 @@ namespace dx11
 	{
 		if ( m_pRenderSystem == nullptr )
 		{
-			m_GraphicsException.Except( __LINE__, __FILE__ );
+			m_GraphicsException.Except( __LINE__, __FILE__, GetLastError() );
 		}
 
 		return *m_pRenderSystem;
