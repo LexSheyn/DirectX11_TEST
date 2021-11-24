@@ -57,7 +57,7 @@ namespace dx11
 
 		const float color = std::sin( m_Timer.Peek() ) / 2.0f + 0.5f;
 
-		m_Window.GetRenderSystem().ClearBuffer( color, 0.0f, 0.0f );
+		m_Window.GetRenderSystem().ClearBuffer( color, color / 1.7f, 0.0f );
 
 		m_Window.GetRenderSystem().EndFrame();
 	}

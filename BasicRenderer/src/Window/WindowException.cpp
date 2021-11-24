@@ -5,6 +5,11 @@ namespace dx11
 {
 // Constructors and Destructor:
 
+	WindowException::WindowException()
+		: m_hResult( 0 )
+	{
+	}
+
 	WindowException::WindowException( int32 line, const char* file, HRESULT hResult ) noexcept
 		: Exception( line, file ),
 		  m_hResult( hResult )
@@ -17,6 +22,13 @@ namespace dx11
 
 
 // Functions:
+
+	void WindowException::Except(int32 line, const char* file, HRESULT hResult)
+	{
+		WindowException window_exception( line, file, hResult );
+		
+		throw window_exception;
+	}
 
 	std::string WindowException::TranslateErrorCode(HRESULT hResult) noexcept
 	{

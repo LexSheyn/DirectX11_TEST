@@ -1,6 +1,9 @@
 #ifndef RENDERSYSTEM_H
 #define RENDERSYSTEM_H
 
+#include "HrException.h"
+#include "DeviceRemovedException.h"
+
 namespace dx11
 {
 	class RenderSystem
@@ -25,6 +28,10 @@ namespace dx11
 		void ClearBuffer( float32 red, float32 green, float32 blue ) noexcept;
 
 	private:
+
+	// Exceptions:
+
+		HrException m_HrException;
 
 	// Variables:
 

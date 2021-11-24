@@ -7,7 +7,8 @@ namespace dx11
 
 	Window::Window( int32 width, int32 height, const char* name )
 		: m_Width( width ),
-		  m_Height( height )
+		  m_Height( height ),
+		  m_hWnd( 0 )
 	{
 	// Calculate Window size based on desired client region size:
 
@@ -26,7 +27,7 @@ namespace dx11
 
 		if ( !( AdjustWindowRect(&window_rect, WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU, FALSE) ) )
 		{
-			WINDOW_EXCEPT_LAST_ERROR();
+			m_WindowException.Except( __LINE__, __FILE__, GetLastError());
 		}
 ;
 	// Create Window and get hWnd:
@@ -44,7 +45,7 @@ namespace dx11
 
 		if ( m_hWnd == nullptr )
 		{
-			WINDOW_EXCEPT_LAST_ERROR();
+			m_WindowException.Except(__LINE__, __FILE__, GetLastError());
 		}
 
 	// Newly created window start of as hidden.
@@ -105,7 +106,7 @@ namespace dx11
 	{
 		if ( SetWindowTextA( m_hWnd, title.c_str() ) == 0 )
 		{
-			WINDOW_EXCEPT_LAST_ERROR();
+			m_WindowException.Except( __LINE__, __FILE__, GetLastError() );
 		}
 	}
 

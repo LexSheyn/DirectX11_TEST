@@ -3,18 +3,6 @@
 
 #include "../Exception/Exception.h"
 
-// Exception setup.
-#define SET_WINDOW_EXCEPTION( hResult ) WindowException exception( __LINE__, __FILE__, hResult );
-
-// Exception throw.
-#define GET_WINDOW_EXCEPTION throw exception;
-
-// Exception with parameters.
-#define WINDOW_EXCEPT( hResult ) SET_WINDOW_EXCEPTION( hResult ) GET_WINDOW_EXCEPTION
-
-// Exception with default Win32 last error code.
-#define WINDOW_EXCEPT_LAST_ERROR() SET_WINDOW_EXCEPTION( GetLastError() ) GET_WINDOW_EXCEPTION
-
 namespace dx11
 {
 	class WindowException : public Exception
@@ -23,11 +11,14 @@ namespace dx11
 
 	// Constructors and Destructor:
 
+		WindowException();
 		WindowException( int32 line, const char* file, HRESULT hResult ) noexcept;
 
 		~WindowException();
 
 	// Functions:
+
+		void Except( int32 line, const char* file, HRESULT hResult );
 
 		static std::string TranslateErrorCode( HRESULT hResult ) noexcept;
 

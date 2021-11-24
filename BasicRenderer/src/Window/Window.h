@@ -63,6 +63,8 @@ namespace dx11
 
 		std::unique_ptr<RenderSystem> m_pRenderSystem;
 
+		WindowException m_WindowException;
+
 	// Private WindowClass:
 
 		// Singleton manages registration/cleanup of window class.

@@ -27,20 +27,27 @@ namespace dx11
 		swap_chain_descriotor.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 		swap_chain_descriotor.Flags = 0u;
 
+	// HRESULT for checking results of d3d functions:
+
+		HRESULT h_result = 0;
+
 	// Create device and front/back buffers, and swap chain and rendering context:
 
-		D3D11CreateDeviceAndSwapChain(nullptr,
-			D3D_DRIVER_TYPE_HARDWARE,
-			nullptr,
-			0u,
-			nullptr,
-			0u,
-			D3D11_SDK_VERSION,
-			&swap_chain_descriotor,
-			&m_pSwapChain,
-			&m_pDevice,
-			nullptr,
-			&m_pContext);
+		if ( FAILED (D3D11CreateDeviceAndSwapChain(nullptr,
+			                                       D3D_DRIVER_TYPE_HARDWARE,
+			                                       nullptr,
+			                                       0u,
+			                                       nullptr,
+			                                       0u,
+			                                       D3D11_SDK_VERSION,
+			                                       &swap_chain_descriotor,
+			                                       &m_pSwapChain,
+			                                       &m_pDevice,
+			                                       nullptr,
+			                                       &m_pContext) ) )
+		{
+			m_HrException.Except( __LINE__, __FILE__, h_result );
+		}
 
 	// Gain access to texture subresource in swap chain (back buffer):
 

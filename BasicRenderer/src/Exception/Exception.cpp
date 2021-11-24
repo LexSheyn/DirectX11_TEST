@@ -5,6 +5,12 @@ namespace dx11
 {
 // Constructors and Destructor:
 
+	Exception::Exception()
+		: m_Line( 0 ),
+		  m_File( "" )
+	{
+	}
+
 	Exception::Exception( int32 line, const char* file ) noexcept
 		: m_Line( line ),
 		  m_File( file )

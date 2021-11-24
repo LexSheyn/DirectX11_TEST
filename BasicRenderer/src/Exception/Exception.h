@@ -9,6 +9,7 @@ namespace dx11
 
 	// Constructors and Destructor:
 
+		Exception();
 		Exception( int32 line, const char* file ) noexcept;
 
 		~Exception();
