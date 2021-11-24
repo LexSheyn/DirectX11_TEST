@@ -54,22 +54,25 @@
     <ClCompile Include="src\Timer\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\RenderSystem.cpp">
+    <ClCompile Include="src\RenderSystem\RenderSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\PrecompiledHeaders\DirectxError\dxerr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\HrException.cpp">
+    <ClCompile Include="src\RenderSystem\HrException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\DeviceRemovedException.cpp">
+    <ClCompile Include="src\RenderSystem\DeviceRemovedException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Window\GraphicsException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\DXGI_InfoManager\DxgiInfoManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderSystem\InfoException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -119,22 +122,25 @@
     <ClInclude Include="src\Timer\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\RenderSystem.h">
+    <ClInclude Include="src\RenderSystem\RenderSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\PrecompiledHeaders\DirectxError\dxerr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\HrException.h">
+    <ClInclude Include="src\RenderSystem\HrException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Graphics\DeviceRemovedException.h">
+    <ClInclude Include="src\RenderSystem\DeviceRemovedException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Window\GraphicsException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DXGI_InfoManager\DxgiInfoManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderSystem\InfoException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -158,5 +164,8 @@
     <None Include="src\PrecompiledHeaders\DirectxError\DXTrace.inl">
       <Filter>Header Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="src\RenderSystem\Shaders\VertexShader.hlsl" />
   </ItemGroup>
 </Project>

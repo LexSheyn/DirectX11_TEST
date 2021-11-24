@@ -11,15 +11,6 @@ namespace dx11
 
 	public:
 
-	// Constructors and Destructor:
-
-		DeviceRemovedException();
-		DeviceRemovedException( int32 line, const char* file, HRESULT hResult );
-
-	// Functions:
-
-		void Except( int32 line, const char* file, HRESULT hResult );
-
 	// Accessors:
 
 		const char* GetType() const noexcept override;
@@ -28,7 +19,7 @@ namespace dx11
 
 	// Variables:
 
-		HRESULT m_hResult;
+		std::string m_Reason;
 	};
 }
 

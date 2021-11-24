@@ -59,6 +59,8 @@ namespace dx11
 
 		m_Window.GetRenderSystem().ClearBuffer( color, color / 1.7f, 0.0f );
 
+		m_Window.GetRenderSystem().DrawTestTriangle();
+
 		m_Window.GetRenderSystem().EndFrame();
 	}
 

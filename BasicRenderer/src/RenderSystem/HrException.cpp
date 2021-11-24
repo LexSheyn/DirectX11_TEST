@@ -34,11 +34,11 @@ namespace dx11
 		std::ostringstream out_str_stream;
 
 		out_str_stream << this->GetType()
-			<< "\n" << "[Error code]: 0x" << std::hex << std::uppercase << this->GetErrorCode()
-			<< std::dec << " (" << static_cast<uint64>(this->GetErrorCode()) << ")"
-			<< "\n" << "[Error string]: " << this->GetErrorString()
-			<< "\n" << "[Description]: " << this->GetErrorDescription()
-			<< "\n" << Exception::GetOriginString();
+			           << "\n" << "[Error code]: 0x" << std::hex << std::uppercase << this->GetErrorCode()
+			           << std::dec << " (" << static_cast<uint64>(this->GetErrorCode()) << ")"
+			           << "\n" << "[Error string]: " << this->GetErrorString()
+			           << "\n" << "[Description]: " << this->GetErrorDescription()
+			           << "\n" << Exception::GetOriginString();
 
 		WhatBuffer = out_str_stream.str();
 

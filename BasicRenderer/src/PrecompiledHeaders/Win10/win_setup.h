@@ -48,5 +48,5 @@
 #define STRICT
 
 #include <Windows.h>
-
+#include <wrl.h>
 #endif // WIN_SETUP_H

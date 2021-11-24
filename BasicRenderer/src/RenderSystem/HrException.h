@@ -43,6 +43,7 @@ namespace dx11
 	// Variables:
 
 		HRESULT m_hResult;
+		std::string info;
 	};
 }
 

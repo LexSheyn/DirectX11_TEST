@@ -96,14 +96,15 @@
   <ItemGroup>
     <ClCompile Include="src\Application\Application.cpp" />
     <ClCompile Include="src\DXGI_InfoManager\DxgiInfoManager.cpp" />
-    <ClCompile Include="src\Graphics\DeviceRemovedException.cpp" />
-    <ClCompile Include="src\Graphics\HrException.cpp" />
+    <ClCompile Include="src\RenderSystem\DeviceRemovedException.cpp" />
+    <ClCompile Include="src\RenderSystem\HrException.cpp" />
     <ClCompile Include="src\PrecompiledHeaders\DirectxError\dxerr.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <ClCompile Include="src\Exception\Exception.cpp" />
-    <ClCompile Include="src\Graphics\RenderSystem.cpp" />
+    <ClCompile Include="src\RenderSystem\InfoException.cpp" />
+    <ClCompile Include="src\RenderSystem\RenderSystem.cpp" />
     <ClCompile Include="src\InputDevices\Mouse\Interface\IMouse.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
@@ -141,11 +142,12 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\Application\Application.h" />
     <ClInclude Include="src\DXGI_InfoManager\DxgiInfoManager.h" />
-    <ClInclude Include="src\Graphics\DeviceRemovedException.h" />
-    <ClInclude Include="src\Graphics\HrException.h" />
+    <ClInclude Include="src\RenderSystem\DeviceRemovedException.h" />
+    <ClInclude Include="src\RenderSystem\HrException.h" />
     <ClInclude Include="src\PrecompiledHeaders\DirectxError\dxerr.h" />
     <ClInclude Include="src\Exception\Exception.h" />
-    <ClInclude Include="src\Graphics\RenderSystem.h" />
+    <ClInclude Include="src\RenderSystem\InfoException.h" />
+    <ClInclude Include="src\RenderSystem\RenderSystem.h" />
     <ClInclude Include="src\InputDevices\Mouse\Interface\IMouse.h" />
     <ClInclude Include="src\InputDevices\Keyboard\KeyEvent.h" />
     <ClInclude Include="src\InputDevices\Keyboard\Keyboard.h" />
@@ -170,6 +172,12 @@
     <None Include="src\PrecompiledHeaders\DirectxError\DXGetErrorDescription.inl" />
     <None Include="src\PrecompiledHeaders\DirectxError\DXGetErrorString.inl" />
     <None Include="src\PrecompiledHeaders\DirectxError\DXTrace.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="src\RenderSystem\Shaders\VertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

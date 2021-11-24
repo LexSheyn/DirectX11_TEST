@@ -1,7 +1,7 @@
 #ifndef GRAPHICSEXCEPTION_H
 #define GRAPHICSEXCEPTION_H
 
-#include "../Graphics/HrException.h"
+#include "../RenderSystem/HrException.h"
 
 namespace dx11
 {

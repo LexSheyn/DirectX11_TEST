@@ -51,39 +51,14 @@ namespace dx11
 
 	// Gain access to texture subresource in swap chain (back buffer):
 
-		ID3D11Resource* pBackBuffer = nullptr;
+		Microsoft::WRL::ComPtr<ID3D11Resource> pBackBuffer;
 
-		m_pSwapChain->GetBuffer( 0u, __uuidof( ID3D11Texture2D ), reinterpret_cast<void**>( &pBackBuffer ) );
+		m_pSwapChain->GetBuffer( 0u, __uuidof( ID3D11Texture2D ), &pBackBuffer );
 
-		if ( pBackBuffer != nullptr )
-		{
-			m_pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &m_pRenderTargetView);
-		}
+		m_pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &m_pRenderTargetView);
+
 
 		pBackBuffer->Release();
-	}
-
-	RenderSystem::~RenderSystem()
-	{
-		if ( m_pDevice != nullptr) 
-		{
-			m_pDevice->Release();
-		}
-
-		if ( m_pSwapChain != nullptr )
-		{
-			m_pSwapChain->Release();
-		}
-		
-		if ( m_pContext != nullptr )
-		{
-			m_pContext->Release();
-		}
-
-		if ( m_pRenderTargetView != nullptr )
-		{
-			m_pRenderTargetView->Release();
-		}
 	}
 
 
@@ -110,7 +85,7 @@ namespace dx11
 	{
 		const float color[] = { red, green, blue, 1.0f };
 
-		m_pContext->ClearRenderTargetView( m_pRenderTargetView, color );
+		m_pContext->ClearRenderTargetView( m_pRenderTargetView.Get(), color );
 	}
 
 }

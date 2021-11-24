@@ -9,7 +9,7 @@
 #include "../InputDevices/Keyboard/Keyboard.h"
 #include "../InputDevices/Mouse/Mouse.h"
 
-#include "../Graphics/RenderSystem.h"
+#include "../RenderSystem/RenderSystem.h"
 
 namespace dx11
 {
