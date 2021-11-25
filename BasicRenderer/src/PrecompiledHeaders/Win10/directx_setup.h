@@ -15,4 +15,7 @@
 #include <d3dcompiler.h>
 #pragma comment( lib, "D3DCompiler.lib" )
 
+// DirectX math:
+#include <DirectXMath.h>
+
 #endif // DIRECTX_SETUP_H

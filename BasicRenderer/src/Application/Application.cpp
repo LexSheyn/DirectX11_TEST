@@ -61,7 +61,9 @@ namespace dx11
 
 	// Working on DrawTestTriangle:
 	// 
-		m_Window.GetRenderSystem().DrawTestTriangle( m_Timer.Peek() );
+		m_Window.GetRenderSystem().DrawTestTriangle( m_Timer.Peek(), 
+			                    static_cast<float32>(m_Window.mouse.GetX()) /  525.0f  - 1.0f, 
+			                   (static_cast<float32>(m_Window.mouse.GetY()) / -225.0f) + 1.0f );
 
 		m_Window.GetRenderSystem().EndFrame();
 	}

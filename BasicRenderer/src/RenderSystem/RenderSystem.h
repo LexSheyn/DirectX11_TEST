@@ -28,7 +28,7 @@ namespace dx11
 		void ClearBuffer( float32 red, float32 green, float32 blue ) noexcept;
 
 		// TEST
-		void DrawTestTriangle( float32 angle )
+		void DrawTestTriangle( float32 angle, float32 x, float32 y )
 		{
 		// Create a vertex buffer (1 2d triangle at the center of the screen):
 
@@ -120,22 +120,18 @@ namespace dx11
 			m_pContext->IASetIndexBuffer( pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u );
 
 		// Create constant buffer for transfirmation natrix:
-
+			
 			struct ConstantBuffer
 			{
-				struct
-				{
-					float32 element[4][4];
-				} transformation;
+				DirectX::XMMATRIX transform;
 			};
 
 			const ConstantBuffer constant_buffer =
 			{
 				{
-					 std::cos( angle ), std::sin( angle ), 0.0f, 0.0f,
-					-std::sin( angle ), std::cos( angle ), 0.0f, 0.0f,
-					0.0f              , 0.0f             , 1.0f, 0.0f,
-					0.0f              , 0.0f             , 0.0f, 1.0f
+					DirectX::XMMatrixTranspose( DirectX::XMMatrixRotationZ( angle )
+					                          * DirectX::XMMatrixScaling( 9.0f / 21.0f, 1.0f, 1.0f ) 
+					                          * DirectX::XMMatrixTranslation( x, y, 0.0f ) )
 				}
 			};
 
