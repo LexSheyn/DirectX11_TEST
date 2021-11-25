@@ -66,9 +66,9 @@ namespace dx11
 
 	void RenderSystem::EndFrame()
 	{
-		HRESULT h_result = 0;
+		HRESULT h_result = m_pSwapChain->Present(1u, 0u);
 
-		if( FAILED( m_pSwapChain->Present( 1u, 0u ) ) )
+		if( FAILED( h_result ) )
 		{
 			if ( h_result == DXGI_ERROR_DEVICE_REMOVED )
 			{
@@ -76,7 +76,7 @@ namespace dx11
 			}
 			else
 			{
-				m_HrException.Except( __LINE__, __FILE__, GetLastError());
+				m_HrException.Except( __LINE__, __FILE__, h_result);
 			}			
 		}
 	}

@@ -3,14 +3,6 @@
 
 #include "../Exception/Exception.h"
 
-// Exception setup.
-#define SET_GFX_EXCEPTION_HRESULT( hResult ) HrException hr_exception( __LINE__, __FILE__, hResult );
-
-// Exception throw.
-#define GET_GFX_EXCEPTION_HRESULT throw hr_exception;
-
-#define GFX_EXCEPT_HRESULT_FAILED( hResultCall ) if( FAILED( h_result = (hResultCall) ) ) SET_GFX_EXCEPTION_HRESULT( h_result ) GET_GFX_EXCEPTION_HRESULT
-
 namespace dx11
 {
 	class HrException : public Exception

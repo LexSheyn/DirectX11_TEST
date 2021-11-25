@@ -11,7 +11,7 @@ namespace dx11
 	}
 
 	HrException::HrException(int32 line, const char* file, HRESULT hResult) noexcept
-		: Exception( 0, "" ),
+		: Exception( line, file ),
 		  m_hResult( hResult )
 	{
 	}
