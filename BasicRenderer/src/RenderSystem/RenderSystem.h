@@ -34,20 +34,34 @@ namespace dx11
 
 			struct Vertex
 			{
-				float32 x;
-				float32 y;
+				struct
+				{
+					float32 x;
+					float32 y;
+				} position;
+				
+				struct
+				{
+					uint8 r;
+					uint8 g;
+					uint8 b;
+					uint8 a;
+				} color;				
 			};
 
-			const Vertex vertices[] =
+			Vertex vertices[] =
 			{
-				{  0.0f,  0.5f },
-				{  0.5f, -0.5f },
-				{ -0.5f, -0.5f }
+				{  0.0f,  0.5f, 255, 000, 000, 255 },
+				{  0.5f, -0.5f, 000, 255, 000, 255 },
+				{ -0.5f, -0.5f, 000, 000, 255, 255 },
+				{ -0.3f,  0.3f, 000, 255, 000, 255 },
+				{  0.3f,  0.3f, 000, 000, 255, 255 },
+				{  0.0f, -0.8f, 255, 000, 000, 255 }
 			};
 
 			Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer;
 
-			D3D11_BUFFER_DESC vertex_buffer_desc = { 0 };
+			D3D11_BUFFER_DESC vertex_buffer_desc = {};
 
 			vertex_buffer_desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 			vertex_buffer_desc.Usage = D3D11_USAGE_DEFAULT;
@@ -56,7 +70,7 @@ namespace dx11
 			vertex_buffer_desc.ByteWidth = sizeof( vertices );
 			vertex_buffer_desc.StructureByteStride = sizeof( Vertex );
 
-			D3D11_SUBRESOURCE_DATA subresource_data = { 0 };
+			D3D11_SUBRESOURCE_DATA subresource_data = {};
 
 			subresource_data.pSysMem = vertices;
 
@@ -73,6 +87,37 @@ namespace dx11
 			const uint32 offset = 0u;
 
 			m_pContext->IASetVertexBuffers( 0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset );
+
+		// Create Index buffer:
+
+			const uint16 indices[] =
+			{
+				0, 1, 2,
+				0, 2, 3,
+				0, 4, 1,
+				2, 1, 5
+			};
+
+			Microsoft::WRL::ComPtr<ID3D11Buffer> pIndexBuffer;
+
+			D3D11_BUFFER_DESC index_buffer_desc = {};
+
+			index_buffer_desc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+			index_buffer_desc.Usage = D3D11_USAGE_DEFAULT;
+			index_buffer_desc.CPUAccessFlags = 0u;
+			index_buffer_desc.MiscFlags = 0u;
+			index_buffer_desc.ByteWidth = sizeof( vertices );
+			index_buffer_desc.StructureByteStride = sizeof( Vertex );
+
+			D3D11_SUBRESOURCE_DATA index_subresource_data = {};
+
+			index_subresource_data.pSysMem = indices;
+
+			m_pDevice->CreateBuffer( &index_buffer_desc, &index_subresource_data, &pIndexBuffer);
+
+		// Bind Index buffer to pipelines:
+
+			m_pContext->IASetIndexBuffer( pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u );
 
 		// Create Pixel Shader:
 
@@ -102,7 +147,8 @@ namespace dx11
 
 			const D3D11_INPUT_ELEMENT_DESC input_element_desc[] =
 			{
-				{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT , 0, 0 , D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "Color"   , 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 8u, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 			};
 
 			m_pDevice->CreateInputLayout( input_element_desc, 
@@ -127,8 +173,8 @@ namespace dx11
 
 			D3D11_VIEWPORT viewport;
 
-			viewport.Width    = 1050.0f;
-			viewport.Height   = 450.0f;
+			viewport.Width    = 525.0f;
+			viewport.Height   = 225.0f;
 			viewport.MinDepth = 0.0f;
 			viewport.MaxDepth = 1.0f;
 			viewport.TopLeftX = 0.0f;
@@ -138,7 +184,7 @@ namespace dx11
 
 		// InfoException should be used, but class InfoManager required:
 
-			m_pContext->Draw( static_cast<uint32>(std::size( vertices )), 0u );
+			m_pContext->DrawIndexed( static_cast<uint32>(std::size( indices )), 0u, 0u );
 		}
 
 	private:
