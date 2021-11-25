@@ -61,7 +61,7 @@ namespace dx11
 
 	// Working on DrawTestTriangle:
 	// 
-	//	m_Window.GetRenderSystem().DrawTestTriangle();
+		m_Window.GetRenderSystem().DrawTestTriangle();
 
 		m_Window.GetRenderSystem().EndFrame();
 	}

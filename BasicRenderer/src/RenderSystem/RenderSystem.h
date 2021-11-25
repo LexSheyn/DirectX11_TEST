@@ -72,11 +72,73 @@ namespace dx11
 			const uint32 stride = sizeof( Vertex );
 			const uint32 offset = 0u;
 
-			m_pContext->IASetVertexBuffers( 0u, 1u, &pVertexBuffer, &stride, &offset );
+			m_pContext->IASetVertexBuffers( 0u, 1u, pVertexBuffer.GetAddressOf(), &stride, &offset );
+
+		// Create Pixel Shader:
+
+			Microsoft::WRL::ComPtr<ID3DBlob> pBlob;
+
+			Microsoft::WRL::ComPtr<ID3D11PixelShader> pPixelShader;
+			D3DReadFileToBlob( L"../Resources/CompiledShaders/PixelShader.cso", &pBlob );
+			m_pDevice->CreatePixelShader( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pPixelShader);
+
+		// Bind Pixel Shader:
+
+			m_pContext->PSSetShader( pPixelShader.Get(), nullptr, 0u );
+
+		// Create Vertex Shader:
+
+			Microsoft::WRL::ComPtr<ID3D11VertexShader> pVertexShader;
+			D3DReadFileToBlob( L"../Resources/CompiledShaders/VertexShader.cso", &pBlob );
+			m_pDevice->CreateVertexShader( pBlob->GetBufferPointer(), pBlob->GetBufferSize(), nullptr, &pVertexShader );
+
+		// Bind Vertex Shader:
+
+			m_pContext->VSSetShader( pVertexShader.Get(), nullptr, 0u );		
+
+		// Input (Vertex) layout (2d position only):
+
+			Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;
+
+			const D3D11_INPUT_ELEMENT_DESC input_element_desc[] =
+			{
+				{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			};
+
+			m_pDevice->CreateInputLayout( input_element_desc, 
+				                          static_cast<uint32>( std::size( input_element_desc ) ), 
+				                          pBlob->GetBufferPointer(),
+				                          pBlob->GetBufferSize(),
+				                          &pInputLayout );
+
+		// Bind Input (Vertex) layout:
+
+			m_pContext->IASetInputLayout( pInputLayout.Get() );
+
+		// Bind Render Target View:
+
+			m_pContext->OMSetRenderTargets( 1u, m_pRenderTargetView.GetAddressOf(), nullptr );
+
+		// Set primitive topology to triangle list (groups 3 vertices):
+
+			m_pContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+
+		// Configure Viewport:
+
+			D3D11_VIEWPORT viewport;
+
+			viewport.Width    = 1050.0f;
+			viewport.Height   = 450.0f;
+			viewport.MinDepth = 0.0f;
+			viewport.MaxDepth = 1.0f;
+			viewport.TopLeftX = 0.0f;
+			viewport.TopLeftY = 0.0f;
+
+			m_pContext->RSSetViewports( 1u, &viewport );
 
 		// InfoException should be used, but class InfoManager required:
 
-			m_pContext->Draw( 3u, 0u );
+			m_pContext->Draw( static_cast<uint32>(std::size( vertices )), 0u );
 		}
 
 	private:
