@@ -30,6 +30,13 @@ namespace dx11
 		// TEST
 		void DrawTestTriangle( float32 angle, float32 x, float32 y )
 		{
+			// TEST:
+			DirectX::XMVECTOR vector = DirectX::XMVectorSet( 3.0f, 3.0f, 0.0f, 0.0f );
+
+			auto result = DirectX::XMVector3Transform( vector, DirectX::XMMatrixScaling( 1.5f, 0.0f, 0.0f ) );
+
+			auto vx = DirectX::XMVectorGetX( result );
+
 		// Create a vertex buffer (1 2d triangle at the center of the screen):
 
 			struct Vertex
@@ -38,25 +45,20 @@ namespace dx11
 				{
 					float32 x;
 					float32 y;
-				} position;
-				
-				struct
-				{
-					uint8 r;
-					uint8 g;
-					uint8 b;
-					uint8 a;
-				} color;				
+					float32 z;
+				} position;				
 			};
 
 			Vertex vertices[] =
 			{
-				{  0.0f,  0.5f, 255, 000, 000, 255 },
-				{  0.5f, -0.5f, 000, 255, 000, 255 },
-				{ -0.5f, -0.5f, 000, 000, 255, 255 },
-				{ -0.3f,  0.3f, 000, 255, 000, 255 },
-				{  0.3f,  0.3f, 000, 000, 255, 255 },
-				{  0.0f, -0.8f, 255, 000, 000, 255 }
+				{ -1.0f, -1.0f, -1.0f },
+				{  1.0f, -1.0f, -1.0f },
+				{ -1.0f,  1.0f, -1.0f },
+				{  1.0f,  1.0f, -1.0f },
+				{ -1.0f, -1.0f,  1.0f },
+				{  1.0f, -1.0f,  1.0f },
+				{ -1.0f,  1.0f,  1.0f },
+				{  1.0f,  1.0f,  1.0f }
 			};
 
 			Microsoft::WRL::ComPtr<ID3D11Buffer> pVertexBuffer;
@@ -92,10 +94,17 @@ namespace dx11
 
 			const uint16 indices[] =
 			{
-				0, 1, 2,
-				0, 2, 3,
-				0, 4, 1,
-				2, 1, 5
+				0, 2, 1,    2, 3, 1,
+
+				1, 3, 5,    3, 7, 5,
+
+				2, 6, 3,    3, 6, 7,
+
+				4, 5, 7,    4, 7, 6,
+
+				0, 4, 2,    2, 4, 6,
+
+				0, 1, 4,    1, 5, 4
 			};
 
 			Microsoft::WRL::ComPtr<ID3D11Buffer> pIndexBuffer;
@@ -129,9 +138,10 @@ namespace dx11
 			const ConstantBuffer constant_buffer =
 			{
 				{
-					DirectX::XMMatrixTranspose( DirectX::XMMatrixRotationZ( angle )
-					                          * DirectX::XMMatrixScaling( 9.0f / 21.0f, 1.0f, 1.0f ) 
-					                          * DirectX::XMMatrixTranslation( x, y, 0.0f ) )
+					DirectX::XMMatrixTranspose( DirectX::XMMatrixRotationZ( angle ) 
+					                          * DirectX::XMMatrixRotationX(angle)
+					                          * DirectX::XMMatrixTranslation( x, y, 4.0f ) 
+						                      * DirectX::XMMatrixPerspectiveLH( 1.0f, 9.0f / 21.0f, 0.5f, 10.f ) )
 				}
 			};
 
@@ -155,6 +165,48 @@ namespace dx11
 		// Bind ConstantBuffer to vertex shader:
 
 			m_pContext->VSSetConstantBuffers( 0u, 1u, pConstantBuffer.GetAddressOf() );
+
+			struct ConstantBuffer2
+			{
+				struct
+				{
+					float32 r;
+					float32 g;
+					float32 b;
+					float32 a;
+				} face_colors[6];
+			};
+
+			const ConstantBuffer2 constant_buffer2 =
+			{
+				{
+					{ 1.0f, 0.0f, 1.0f, 1.0f },
+					{ 1.0f, 0.0f, 0.0f, 1.0f },
+					{ 0.0f, 1.0f, 0.0f, 1.0f },
+					{ 0.0f, 0.0f, 1.0f, 1.0f },
+					{ 1.0f, 1.0f, 0.0f, 1.0f },
+					{ 0.0f, 1.0f, 1.0f, 1.0f },
+				}
+			};
+
+			Microsoft::WRL::ComPtr<ID3D11Buffer> pConstantBuffer2;
+
+			D3D11_BUFFER_DESC constant_buffer_desc2 = {};
+
+			constant_buffer_desc2.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+			constant_buffer_desc2.Usage = D3D11_USAGE_DYNAMIC;
+			constant_buffer_desc2.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			constant_buffer_desc2.MiscFlags = 0u;
+			constant_buffer_desc2.ByteWidth = sizeof( constant_buffer2 );
+			constant_buffer_desc2.StructureByteStride = 0u;
+
+			D3D11_SUBRESOURCE_DATA const_buf_subresource_data2 = {};
+
+			const_buf_subresource_data2.pSysMem = &constant_buffer2;
+
+			m_pDevice->CreateBuffer( &constant_buffer_desc2, &const_buf_subresource_data2, &pConstantBuffer2 );
+
+			m_pContext->VSSetConstantBuffers( 0u, 1u, pConstantBuffer2.GetAddressOf() );
 
 		// Create Pixel Shader:
 
@@ -184,8 +236,7 @@ namespace dx11
 
 			const D3D11_INPUT_ELEMENT_DESC input_element_desc[] =
 			{
-				{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT  , 0, 0 , D3D11_INPUT_PER_VERTEX_DATA, 0 },
-				{ "Color"   , 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 8u, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+				{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 			};
 
 			m_pDevice->CreateInputLayout( input_element_desc, 
