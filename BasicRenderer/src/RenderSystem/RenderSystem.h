@@ -28,7 +28,7 @@ namespace dx11
 		void ClearBuffer( float32 red, float32 green, float32 blue ) noexcept;
 
 		// TEST
-		void DrawTestTriangle()
+		void DrawTestTriangle( float32 angle )
 		{
 		// Create a vertex buffer (1 2d triangle at the center of the screen):
 
@@ -119,6 +119,47 @@ namespace dx11
 
 			m_pContext->IASetIndexBuffer( pIndexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0u );
 
+		// Create constant buffer for transfirmation natrix:
+
+			struct ConstantBuffer
+			{
+				struct
+				{
+					float32 element[4][4];
+				} transformation;
+			};
+
+			const ConstantBuffer constant_buffer =
+			{
+				{
+					 std::cos( angle ), std::sin( angle ), 0.0f, 0.0f,
+					-std::sin( angle ), std::cos( angle ), 0.0f, 0.0f,
+					0.0f              , 0.0f             , 1.0f, 0.0f,
+					0.0f              , 0.0f             , 0.0f, 1.0f
+				}
+			};
+
+			Microsoft::WRL::ComPtr<ID3D11Buffer> pConstantBuffer;
+
+			D3D11_BUFFER_DESC constant_buffer_desc = {};
+
+			constant_buffer_desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+			constant_buffer_desc.Usage = D3D11_USAGE_DYNAMIC;
+			constant_buffer_desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			constant_buffer_desc.MiscFlags = 0u;
+			constant_buffer_desc.ByteWidth = sizeof( constant_buffer );
+			constant_buffer_desc.StructureByteStride = 0u;
+
+			D3D11_SUBRESOURCE_DATA const_buf_subresource_data = {};
+
+			const_buf_subresource_data.pSysMem = &constant_buffer;
+
+			m_pDevice->CreateBuffer( &constant_buffer_desc, &const_buf_subresource_data, &pConstantBuffer );
+
+		// Bind ConstantBuffer to vertex shader:
+
+			m_pContext->VSSetConstantBuffers( 0u, 1u, pConstantBuffer.GetAddressOf() );
+
 		// Create Pixel Shader:
 
 			Microsoft::WRL::ComPtr<ID3DBlob> pBlob;
@@ -147,7 +188,7 @@ namespace dx11
 
 			const D3D11_INPUT_ELEMENT_DESC input_element_desc[] =
 			{
-				{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT , 0, 0 , D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT  , 0, 0 , D3D11_INPUT_PER_VERTEX_DATA, 0 },
 				{ "Color"   , 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, 8u, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 			};
 
@@ -173,8 +214,8 @@ namespace dx11
 
 			D3D11_VIEWPORT viewport;
 
-			viewport.Width    = 525.0f;
-			viewport.Height   = 225.0f;
+			viewport.Width    = 1050.0f;
+			viewport.Height   = 450.0f;
 			viewport.MinDepth = 0.0f;
 			viewport.MaxDepth = 1.0f;
 			viewport.TopLeftX = 0.0f;
