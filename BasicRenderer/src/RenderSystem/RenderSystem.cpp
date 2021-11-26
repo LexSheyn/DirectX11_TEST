@@ -106,6 +106,19 @@ namespace dx11
 	// Bind depth stencil view to OM:
 
 		m_pContext->OMSetRenderTargets( 1u, m_pRenderTargetView.GetAddressOf(), m_pDepthStencilView.Get() );
+
+	// Configure viewport:
+
+		D3D11_VIEWPORT viewport = {};
+
+		viewport.Width    = 1050.0f; 
+		viewport.Height   = 450.0f; 
+		viewport.MinDepth = 0.0f; 
+		viewport.MaxDepth = 1.0f; 
+		viewport.TopLeftX = 0.0f; 
+		viewport.TopLeftY = 0.0f;
+
+		m_pContext->RSSetViewports( 1u, &viewport );
 	}
 
 
@@ -134,6 +147,27 @@ namespace dx11
 
 		m_pContext->ClearRenderTargetView( m_pRenderTargetView.Get(), color );
 		m_pContext->ClearDepthStencilView( m_pDepthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u );
+	}
+
+	void RenderSystem::DrawIndexed(uint32 count) noexcept
+	{
+		m_pContext->DrawIndexed( count, 0u, 0u );
+	}
+
+
+// Accessors:
+
+	const DirectX::XMMATRIX& RenderSystem::GetProjection() const noexcept
+	{
+		return m_ProjectionMatrix;
+	}
+
+
+// Modifiers:
+
+	void RenderSystem::SetProjection(DirectX::FXMMATRIX projection) noexcept
+	{
+		m_ProjectionMatrix = projection;
 	}
 
 }

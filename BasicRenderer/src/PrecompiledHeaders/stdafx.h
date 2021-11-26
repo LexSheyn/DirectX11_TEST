@@ -46,5 +46,6 @@ typedef double             float64;
 #include <bitset>
 #include <optional>
 #include <memory>
+#include <random>
 
 #endif // STDAFX_H

@@ -8,6 +8,8 @@ namespace dx11
 {
 	class RenderSystem
 	{
+		friend class Bindable;
+
 	public:
 
 	// Constructors and Destructor:
@@ -27,8 +29,10 @@ namespace dx11
 
 		void ClearBuffer( float32 red, float32 green, float32 blue ) noexcept;
 
+		void DrawIndexed( uint32 count ) noexcept;
+
 		// TEST
-		void DrawTestTriangle( float32 angle, float32 x, float32 y )
+		void DrawIndexed( float32 angle, float32 x, float32 y )
 		{
 			// TEST:
 			DirectX::XMVECTOR vector = DirectX::XMVectorSet( 3.0f, 3.0f, 0.0f, 0.0f );
@@ -278,14 +282,24 @@ namespace dx11
 			m_pContext->DrawIndexed( static_cast<uint32>(std::size( indices )), 0u, 0u );
 		}
 
+	// Accessors:
+
+		const DirectX::XMMATRIX& GetProjection() const noexcept;
+
+	// Modifiers:
+
+		void SetProjection( DirectX::FXMMATRIX projection ) noexcept;
+
 	private:
 
 	// Exceptions:
 
-		HrException m_HrException;
+		HrException            m_HrException;
 		DeviceRemovedException m_DeviceRemovedException;
 
 	// Variables:
+
+		DirectX::XMMATRIX m_ProjectionMatrix;
 
 		Microsoft::WRL::ComPtr<ID3D11Device>           m_pDevice;
 
