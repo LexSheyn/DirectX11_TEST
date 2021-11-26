@@ -8,9 +8,6 @@ namespace dx11
 	template<typename C>
 	class VertexConstantBuffer : public ConstantBuffer<C>
 	{
-		using ConstantBuffer<C>::m_pConstantBuffer;
-		using Bindable::GetContext;
-
 	public:
 
 		using ConstantBuffer<C>::ConstantBuffer;
@@ -19,7 +16,7 @@ namespace dx11
 
 		void Bind( RenderSystem& renderSystem ) noexcept override
 		{
-			Bindable::GetContext( renderSystem )->VSSetConstantBuffers( 0u, 1u, m_pConstantBuffer.GetAddressOf() );
+			Bindable::GetContext( renderSystem )->VSSetConstantBuffers( 0u, 1u, ConstantBuffer<C>::m_pConstantBuffer.GetAddressOf() );
 		}
 
 	};
