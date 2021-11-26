@@ -142,7 +142,8 @@ namespace dx11
 					                          * DirectX::XMMatrixRotationY( angle ) 
 						                      * DirectX::XMMatrixRotationZ( angle / 2.0f ) 
 						                      * DirectX::XMMatrixScaling( 9.0f / 21.0f, 1.0f, 1.0f )
-					                          * DirectX::XMMatrixTranslation( x, y, 5.0f ) 
+				//	                          * DirectX::XMMatrixTranslation( x, y, 5.0f ) 
+					                          * DirectX::XMMatrixTranslation( x, y, y + 5.0f ) 
 						                      * DirectX::XMMatrixPerspectiveLH( 1.0f, 1.0f, 0.5f, 10.f ) )
 				}
 			};
@@ -253,7 +254,7 @@ namespace dx11
 
 		// Bind Render Target View:
 
-			m_pContext->OMSetRenderTargets( 1u, m_pRenderTargetView.GetAddressOf(), nullptr );
+		//	m_pContext->OMSetRenderTargets( 1u, m_pRenderTargetView.GetAddressOf(), nullptr );
 
 		// Set primitive topology to triangle list (groups 3 vertices):
 
@@ -293,6 +294,8 @@ namespace dx11
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext>    m_pContext;
 
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> m_pRenderTargetView;
+
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> m_pDepthStencilView;
 	};
 }
 
