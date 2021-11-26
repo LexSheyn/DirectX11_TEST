@@ -221,6 +221,9 @@
     <ClInclude Include="src\RenderSystem\RenderObjects\Bindable\VertexShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\DrawableTemplate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BasicRenderer.rc">

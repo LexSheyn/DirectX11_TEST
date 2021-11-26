@@ -12,6 +12,11 @@ namespace dx11
 			bind->Bind( renderSystem );
 		}
 
+		for ( auto& bind : this->GetStaticBinds() )
+		{
+			bind->Bind( renderSystem );
+		}
+
 		renderSystem.DrawIndexed( pIndexBuffer->GetCount() );
 	}
 	

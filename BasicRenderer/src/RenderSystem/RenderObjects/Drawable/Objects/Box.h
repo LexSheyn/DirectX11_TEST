@@ -1,7 +1,7 @@
 #ifndef BOX_H
 #define BOX_H
 
-#include "../Drawable.h"
+#include "../DrawableTemplate.h"
 #include "../../Bindable/ConstantBuffer.h"
 #include "../../Bindable/IndexBuffer.h"
 #include "../../Bindable/InputLayout.h"
@@ -13,7 +13,7 @@
 
 namespace dx11
 {
-	class Box : public Drawable
+	class Box : public DrawableTemplate
 	{
 	public:
 

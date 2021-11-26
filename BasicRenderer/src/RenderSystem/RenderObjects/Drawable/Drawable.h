@@ -11,6 +11,9 @@ namespace dx11
 {
 	class Drawable
 	{
+		template<class T>
+		friend class DrawableTemplate;
+
 	public:
 
 	// Constructors and Destructor:
@@ -36,9 +39,13 @@ namespace dx11
 
 	private:
 
+	// Private Accessors:
+
+		virtual const std::vector<std::unique_ptr<Bindable>>& GetStaticBinds() const noexcept = 0;
+
 	// Variables:
 
-		const IndexBuffer* pIndexBuffer = nullptr;
+		const class IndexBuffer* pIndexBuffer = nullptr;
 
 		std::vector<std::unique_ptr<Bindable>> binds;
 	};
