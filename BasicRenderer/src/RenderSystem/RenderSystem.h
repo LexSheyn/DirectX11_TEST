@@ -138,9 +138,9 @@ namespace dx11
 			const ConstantBuffer constant_buffer =
 			{
 				{
-					DirectX::XMMatrixTranspose( DirectX::XMMatrixRotationX( angle ) 
+					DirectX::XMMatrixTranspose( DirectX::XMMatrixRotationX( angle / 2.0f ) 
 					                          * DirectX::XMMatrixRotationY( angle ) 
-						                      * DirectX::XMMatrixRotationZ( angle ) 
+						                      * DirectX::XMMatrixRotationZ( angle / 2.0f ) 
 						                      * DirectX::XMMatrixScaling( 9.0f / 21.0f, 1.0f, 1.0f )
 					                          * DirectX::XMMatrixTranslation( x, y, 5.0f ) 
 						                      * DirectX::XMMatrixPerspectiveLH( 1.0f, 1.0f, 0.5f, 10.f ) )
@@ -182,12 +182,12 @@ namespace dx11
 			const ConstantBuffer2 constant_buffer2 =
 			{
 				{
-					{ 1.0f, 0.0f, 1.0f, 1.0f },
 					{ 1.0f, 0.0f, 0.0f, 1.0f },
-					{ 0.0f, 1.0f, 0.0f, 1.0f },
-					{ 0.0f, 0.0f, 1.0f, 1.0f },
+					{ 1.0f, 0.0f, 1.0f, 1.0f },
 					{ 1.0f, 1.0f, 0.0f, 1.0f },
+					{ 0.0f, 1.0f, 0.0f, 1.0f },
 					{ 0.0f, 1.0f, 1.0f, 1.0f },
+					{ 0.0f, 0.0f, 1.0f, 1.0f },
 				}
 			};
 
