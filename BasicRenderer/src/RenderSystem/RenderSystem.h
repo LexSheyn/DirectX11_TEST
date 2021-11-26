@@ -46,7 +46,7 @@ namespace dx11
 					float32 x;
 					float32 y;
 					float32 z;
-				} position;				
+				} position;	
 			};
 
 			Vertex vertices[] =
@@ -194,8 +194,8 @@ namespace dx11
 			D3D11_BUFFER_DESC constant_buffer_desc2 = {};
 
 			constant_buffer_desc2.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-			constant_buffer_desc2.Usage = D3D11_USAGE_DYNAMIC;
-			constant_buffer_desc2.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			constant_buffer_desc2.Usage = D3D11_USAGE_DEFAULT;
+			constant_buffer_desc2.CPUAccessFlags = 0u;
 			constant_buffer_desc2.MiscFlags = 0u;
 			constant_buffer_desc2.ByteWidth = sizeof( constant_buffer2 );
 			constant_buffer_desc2.StructureByteStride = 0u;
@@ -206,7 +206,7 @@ namespace dx11
 
 			m_pDevice->CreateBuffer( &constant_buffer_desc2, &const_buf_subresource_data2, &pConstantBuffer2 );
 
-			m_pContext->VSSetConstantBuffers( 0u, 1u, pConstantBuffer2.GetAddressOf() );
+			m_pContext->PSSetConstantBuffers( 0u, 1u, pConstantBuffer2.GetAddressOf() );
 
 		// Create Pixel Shader:
 
