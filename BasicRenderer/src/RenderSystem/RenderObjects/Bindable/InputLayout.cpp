@@ -10,7 +10,7 @@ namespace dx11
 		                     ID3DBlob* pVertexShaderBytecode)
 	{
 		Bindable::GetDevice( renderSystem )->CreateInputLayout( layout.data(),
-			                 static_cast<uint32>(layout.size()),
+			                 UINT(layout.size()),
 			                 pVertexShaderBytecode->GetBufferPointer(),
 			                 pVertexShaderBytecode->GetBufferSize(),
 			                 &m_pInputLayout);

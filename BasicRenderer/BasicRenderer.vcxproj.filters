@@ -111,6 +111,9 @@
     <ClCompile Include="src\RenderSystem\RenderObjects\Drawable\Objects\Box.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\RenderSystem\RenderObjects\Bindable\VertexShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\PrecompiledHeaders\stdafx.h">
@@ -213,6 +216,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Objects\Box.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderSystem\RenderObjects\Bindable\VertexShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

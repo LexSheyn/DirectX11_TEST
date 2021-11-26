@@ -19,6 +19,8 @@ namespace dx11
 		m_VertexConstantBuffer.Update( renderSystem,
 			                           DirectX::XMMatrixTranspose( parent.GetTransformXM() 
 										                         * renderSystem.GetProjection() ) );
+
+		m_VertexConstantBuffer.Bind( renderSystem );
 	}
 
 }

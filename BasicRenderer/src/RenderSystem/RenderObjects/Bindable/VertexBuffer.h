@@ -21,7 +21,7 @@ namespace dx11
 			buffer_desc.Usage = D3D11_USAGE_DEFAULT;
 			buffer_desc.CPUAccessFlags = 0u;
 			buffer_desc.MiscFlags = 0u;
-			buffer_desc.ByteWidth = static_cast<uint32>( sizeof( V ) * vertices.size() );
+			buffer_desc.ByteWidth = UINT( sizeof( V ) * vertices.size() );
 			buffer_desc.StructureByteStride = sizeof( V );
 
 			D3D11_SUBRESOURCE_DATA subresource_data = {};
@@ -35,7 +35,7 @@ namespace dx11
 
 	protected:
 
-		uint32 stride;
+		UINT stride;
 
 		Microsoft::WRL::ComPtr<ID3D11Buffer> m_pVertexBuffer;
 	};

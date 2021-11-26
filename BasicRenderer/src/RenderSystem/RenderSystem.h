@@ -32,7 +32,7 @@ namespace dx11
 		void DrawIndexed( uint32 count ) noexcept;
 
 		// TEST
-		void DrawIndexed( float32 angle, float32 x, float32 y )
+		void DrawIndexedTEST( float32 angle, float32 x, float32 y )
 		{
 			// TEST:
 			DirectX::XMVECTOR vector = DirectX::XMVectorSet( 3.0f, 3.0f, 0.0f, 0.0f );

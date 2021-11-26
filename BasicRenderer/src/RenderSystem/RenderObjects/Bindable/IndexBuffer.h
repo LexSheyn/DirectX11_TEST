@@ -11,7 +11,7 @@ namespace dx11
 
 	// Constructors and Destructor:
 
-		IndexBuffer( RenderSystem& renderSystem, const std::vector<uint32>& indices );
+		IndexBuffer( RenderSystem& renderSystem, const std::vector<uint16>& indices );
 
 	// Functions:
 
@@ -19,11 +19,11 @@ namespace dx11
 
 	// Accessors:
 
-		const uint32& GetCount() const noexcept;
+		const UINT& GetCount() const noexcept;
 
 	protected:
 
-		uint32 count;
+		UINT count;
 
 		Microsoft::WRL::ComPtr<ID3D11Buffer> m_pIndexBuffer;
 	};

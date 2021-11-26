@@ -7,6 +7,10 @@ namespace dx11
 
 	RenderSystem::RenderSystem(HWND hWnd)
 	{
+	// Projection Matrix initialization:
+
+	//	m_ProjectionMatrix = {};
+
 	// Create spaw chain descriptor:
 
 		DXGI_SWAP_CHAIN_DESC swap_chain_descriotor = { 0 };
