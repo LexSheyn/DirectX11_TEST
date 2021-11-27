@@ -12,7 +12,7 @@ namespace dx11
 	class Drawable
 	{
 		template<class T>
-		friend class DrawableTemplate;
+		friend class DrawableBase;
 
 	public:
 

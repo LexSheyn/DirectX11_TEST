@@ -47,5 +47,6 @@ typedef double             float64;
 #include <optional>
 #include <memory>
 #include <random>
+#include <set>
 
 #endif // STDAFX_H

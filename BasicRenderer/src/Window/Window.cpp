@@ -51,7 +51,10 @@ namespace dx11
 	// Newly created window start of as hidden.
 	// Show Window:
 
-		ShowWindow( m_hWnd, SW_SHOWDEFAULT );
+		if (ShowWindow( m_hWnd, SW_SHOWDEFAULT ))
+		{
+			//
+		}
 
 	// Create graphics object:
 
