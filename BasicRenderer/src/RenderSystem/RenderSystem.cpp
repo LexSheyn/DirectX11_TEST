@@ -9,27 +9,27 @@ namespace dx11
 	{
 	// Projection Matrix initialization:
 
-	//	m_ProjectionMatrix = {};
+		m_ProjectionMatrix = {};
 
 	// Create spaw chain descriptor:
 
 		DXGI_SWAP_CHAIN_DESC swap_chain_descriotor = { 0 };
 
-		swap_chain_descriotor.BufferDesc.Width = 0u;
+		swap_chain_descriotor.BufferDesc.Width  = 0u;
 		swap_chain_descriotor.BufferDesc.Height = 0u;
 		swap_chain_descriotor.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-		swap_chain_descriotor.BufferDesc.RefreshRate.Numerator = 0u;
+		swap_chain_descriotor.BufferDesc.RefreshRate.Numerator   = 0u;
 		swap_chain_descriotor.BufferDesc.RefreshRate.Denominator = 0u;
-		swap_chain_descriotor.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+		swap_chain_descriotor.BufferDesc.Scaling          = DXGI_MODE_SCALING_UNSPECIFIED;
 		swap_chain_descriotor.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
-		swap_chain_descriotor.SampleDesc.Count = 1u;
+		swap_chain_descriotor.SampleDesc.Count   = 1u;
 		swap_chain_descriotor.SampleDesc.Quality = 0u;
-		swap_chain_descriotor.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		swap_chain_descriotor.BufferCount = 1u;
+		swap_chain_descriotor.BufferUsage  = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+		swap_chain_descriotor.BufferCount  = 1u;
 		swap_chain_descriotor.OutputWindow = hWnd;
-		swap_chain_descriotor.Windowed = TRUE;
-		swap_chain_descriotor.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-		swap_chain_descriotor.Flags = 0u;
+		swap_chain_descriotor.Windowed     = TRUE;
+		swap_chain_descriotor.SwapEffect   = DXGI_SWAP_EFFECT_DISCARD;
+		swap_chain_descriotor.Flags        = 0u;
 
 	// HRESULT for checking results of d3d functions:
 
@@ -67,9 +67,9 @@ namespace dx11
 
 		D3D11_DEPTH_STENCIL_DESC depth_stencil_desc = {};
 
-		depth_stencil_desc.DepthEnable = TRUE;
+		depth_stencil_desc.DepthEnable    = TRUE;
 		depth_stencil_desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-		depth_stencil_desc.DepthFunc = D3D11_COMPARISON_LESS;
+		depth_stencil_desc.DepthFunc      = D3D11_COMPARISON_LESS;
 
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> pDepthStencilState;
 
@@ -85,14 +85,14 @@ namespace dx11
 
 		D3D11_TEXTURE2D_DESC depth_stencil_tex_desc = {};
 
-		depth_stencil_tex_desc.Width = 1050u;
-		depth_stencil_tex_desc.Height = 450u;
+		depth_stencil_tex_desc.Width     = 1050u;
+		depth_stencil_tex_desc.Height    = 450u;
 		depth_stencil_tex_desc.MipLevels = 1u;
 		depth_stencil_tex_desc.ArraySize = 1u;
-		depth_stencil_tex_desc.Format = DXGI_FORMAT_D32_FLOAT;
-		depth_stencil_tex_desc.SampleDesc.Count = 1u;
+		depth_stencil_tex_desc.Format    = DXGI_FORMAT_D32_FLOAT;
+		depth_stencil_tex_desc.SampleDesc.Count   = 1u;
 		depth_stencil_tex_desc.SampleDesc.Quality = 0u;
-		depth_stencil_tex_desc.Usage = D3D11_USAGE_DEFAULT;
+		depth_stencil_tex_desc.Usage     = D3D11_USAGE_DEFAULT;
 		depth_stencil_tex_desc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 
 		m_pDevice->CreateTexture2D( &depth_stencil_tex_desc, nullptr, &pDepthStencilTexture );
@@ -101,8 +101,8 @@ namespace dx11
 
 		D3D11_DEPTH_STENCIL_VIEW_DESC depth_stencil_view_desc = {};
 
-		depth_stencil_view_desc.Format = DXGI_FORMAT_D32_FLOAT;
-		depth_stencil_view_desc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		depth_stencil_view_desc.Format             = DXGI_FORMAT_D32_FLOAT;
+		depth_stencil_view_desc.ViewDimension      = D3D11_DSV_DIMENSION_TEXTURE2D;
 		depth_stencil_view_desc.Texture2D.MipSlice = 0u;
 
 		m_pDevice->CreateDepthStencilView( pDepthStencilTexture.Get(), &depth_stencil_view_desc, &m_pDepthStencilView );
