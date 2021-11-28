@@ -24,7 +24,7 @@ namespace dx11
 
 	// Variables:
 
-		VertexConstantBuffer<DirectX::XMMATRIX> m_VertexConstantBuffer;
+		static std::unique_ptr<VertexConstantBuffer<DirectX::XMMATRIX>> m_pVertexConstantBuffer;
 
 		const Drawable& parent;
 	};

@@ -29,13 +29,17 @@ namespace dx11
 
 		virtual void Update( const float& dt ) noexcept = 0;
 
-		void AddBind( std::unique_ptr<Bindable> bind ) noexcept;
-
-		void AddIndexBuffer( std::unique_ptr<class IndexBuffer> indexBuffer ) noexcept;
-
 	// Accessors:
 
 		virtual DirectX::XMMATRIX GetTransformXM() const noexcept = 0;
+		
+	protected:
+
+	// Protected Functions:
+
+		void AddBind(std::unique_ptr<Bindable> bind) noexcept;
+
+		void AddIndexBuffer(std::unique_ptr<class IndexBuffer> indexBuffer) noexcept;
 
 	private:
 

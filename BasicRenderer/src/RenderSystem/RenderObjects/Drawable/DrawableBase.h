@@ -8,16 +8,16 @@ namespace dx11
 	template<class T>
 	class DrawableBase : public Drawable
 	{
-	public:
+	protected:
 
-		// Functions:
+	// Functions:
 
-		bool8 IsStaticInitialized() const noexcept
+		static bool8 IsStaticInitialized() noexcept
 		{
 			return !m_StaticBinds.empty();
 		}
 
-		void AddStaticBind(std::unique_ptr<Bindable> bind) noexcept
+		static void AddStaticBind(std::unique_ptr<Bindable> bind) noexcept
 		{
 		//	assert("*Must* use AddIndexBudder to bind index buffer" && typeid(*bind));
 

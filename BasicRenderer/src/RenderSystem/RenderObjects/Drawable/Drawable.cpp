@@ -20,6 +20,9 @@ namespace dx11
 		renderSystem.DrawIndexed( pIndexBuffer->GetCount() );
 	}
 	
+
+// Protected Functions:
+
 	void Drawable::AddBind(std::unique_ptr<Bindable> bind) noexcept
 	{
 		assert( "*Must* ise AddIndexBuffer to bind index buffer" && typeid(&bind) != typeid(IndexBuffer) );

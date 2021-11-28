@@ -96,6 +96,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Cube.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="src\Application\Application.cpp" />
     <ClCompile Include="src\DXGI_InfoManager\DxgiInfoManager.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -167,6 +171,14 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="src\RenderSystem\RenderObjects\Drawable\Primitives\IndexedTrianagleList.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Plane.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="src\RenderSystem\RenderSystem.cpp" />
     <ClCompile Include="src\InputDevices\Mouse\Interface\IMouse.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
@@ -210,6 +222,7 @@
     <ClCompile Include="src\Window\WindowException.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Cube.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\Application\Application.h" />
     <ClInclude Include="src\DXGI_InfoManager\DxgiInfoManager.h" />
@@ -232,6 +245,8 @@
     <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Drawable.h" />
     <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Objects\Box.h" />
     <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\DrawableBase.h" />
+    <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\IndexedTriangleList.h" />
+    <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Plane.h" />
     <ClInclude Include="src\RenderSystem\RenderSystem.h" />
     <ClInclude Include="src\InputDevices\Mouse\Interface\IMouse.h" />
     <ClInclude Include="src\InputDevices\Keyboard\KeyEvent.h" />
