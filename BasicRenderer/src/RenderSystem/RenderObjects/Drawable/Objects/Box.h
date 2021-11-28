@@ -2,6 +2,7 @@
 #define BOX_H
 
 #include "../DrawableBase.h"
+
 #include "../../Bindable/ConstantBuffer.h"
 #include "../../Bindable/IndexBuffer.h"
 #include "../../Bindable/InputLayout.h"
@@ -38,10 +39,12 @@ namespace dx11
 
 	// Positional:
 
-		float32 r;
+		float32 radius;
+
 		float32 roll  = 0.0f;
 		float32 pitch = 0.0f;
 		float32 yaw   = 0.0f;
+
 		float32 theta;
 		float32 phi;
 		float32 chi;
@@ -51,6 +54,7 @@ namespace dx11
 		float32 droll;
 		float32 dpitch;
 		float32 dyaw;
+
 		float32 dtheta;
 		float32 dphi;
 		float32 dchi;

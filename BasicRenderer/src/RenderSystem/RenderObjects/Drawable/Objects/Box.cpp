@@ -11,7 +11,7 @@ namespace dx11
 		     std::uniform_real_distribution<float32>& ddist, 
 		     std::uniform_real_distribution<float32>& odist, 
 		     std::uniform_real_distribution<float32>& rdist)
-		: r( rdist( rng) ),
+		: radius( rdist( rng) ),
 		  droll( ddist( rng) ),
 		  dpitch( ddist( rng) ),
 		  dyaw( ddist( rng) ),
@@ -48,11 +48,11 @@ namespace dx11
 
 			AddStaticBind(std::make_unique<VertexBuffer>(renderSystem, vertices));
 
-			auto pvs = std::make_unique<VertexShader>(renderSystem, L"../Resources/CompiledShaders/VertexShader.cso");
+			auto pVertexShader = std::make_unique<VertexShader>(renderSystem, L"../Resources/CompiledShaders/VertexShader.cso");
 
-			auto pvsbc = pvs->GetBytecode();
+			auto pVertexShaderByteCode = pVertexShader->GetBytecode();
 
-			AddStaticBind(std::move(pvs));
+			AddStaticBind(std::move(pVertexShader));
 
 			AddStaticBind(std::make_unique<PixelShader>(renderSystem, L"../Resources/CompiledShaders/PixelShader.cso"));
 
@@ -84,7 +84,8 @@ namespace dx11
 					float32 a;
 				} face_colors[6];
 			};
-			const ConstantBuffer2 cb2 =
+
+			const ConstantBuffer2 constant_buffer2 =
 			{
 				{
 					{ 1.0f, 0.0f, 1.0f, 1.0f },
@@ -96,14 +97,14 @@ namespace dx11
 				}
 			};
 
-			AddStaticBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(renderSystem, cb2));
+			AddStaticBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(renderSystem, constant_buffer2));
 
-			const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
+			const std::vector<D3D11_INPUT_ELEMENT_DESC> input_element_desc =
 			{
 				{ "Position",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0 },
 			};
 
-			AddStaticBind(std::make_unique<InputLayout>(renderSystem, ied, pvsbc));
+			AddStaticBind(std::make_unique<InputLayout>(renderSystem, input_element_desc, pVertexShaderByteCode));
 
 			AddStaticBind(std::make_unique<Topology>(renderSystem, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST));
 		}
@@ -128,7 +129,7 @@ namespace dx11
 	DirectX::XMMATRIX Box::GetTransformXM() const noexcept
 	{
 		return DirectX::XMMatrixRotationRollPitchYaw( pitch, yaw, roll )
-			 * DirectX::XMMatrixTranslation( r, 0.0f, 0.0f )
+			 * DirectX::XMMatrixTranslation( radius, 0.0f, 0.0f )
 			 * DirectX::XMMatrixRotationRollPitchYaw( theta, phi, chi )
 			 * DirectX::XMMatrixTranslation( 0.0f, 0.0f, 20.0f );
 	}
