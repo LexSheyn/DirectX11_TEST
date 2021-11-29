@@ -10,7 +10,8 @@ namespace dx11
 		     std::uniform_real_distribution<float32>& adist, 
 		     std::uniform_real_distribution<float32>& ddist, 
 		     std::uniform_real_distribution<float32>& odist, 
-		     std::uniform_real_distribution<float32>& rdist)
+		     std::uniform_real_distribution<float32>& rdist,
+		     std::uniform_real_distribution<float32>& bdist  )
 		: radius( rdist( rng) ),
 		  droll( ddist( rng) ),
 		  dpitch( ddist( rng) ),
@@ -29,25 +30,25 @@ namespace dx11
 				DirectX::XMFLOAT3 position;
 			};
 
-			auto model = Sphere::Make<Vertex>();
+		//	auto model = Sphere::Make<Vertex>();
 		//	auto model = Prism::Make<Vertex>();
-		//	auto model = Cube::Make<Vertex>();
+			auto model = Cube::Make<Vertex>();
 
 			model.Transform( DirectX::XMMatrixScaling( 1.0f, 1.0f, 1.0f ) );
 
 			AddStaticBind( std::make_unique<VertexBuffer>( renderSystem, model.vertices ) );
 
-			auto pVertexShader = std::make_unique<VertexShader>(renderSystem, L"../Resources/CompiledShaders/VertexShader.cso");
+			auto pVertexShader = std::make_unique<VertexShader>(renderSystem, L"../Resources/CompiledShaders/ColorIndexVertexShader.cso");
 
 			auto pVertexShaderByteCode = pVertexShader->GetBytecode();
 
 			AddStaticBind(std::move(pVertexShader));
 
-			AddStaticBind(std::make_unique<PixelShader>(renderSystem, L"../Resources/CompiledShaders/PixelShader.cso"));
+			AddStaticBind(std::make_unique<PixelShader>(renderSystem, L"../Resources/CompiledShaders/ColorIndexPixelShader.cso"));
 
 			AddStaticIndexBuffer( std::make_unique<IndexBuffer>( renderSystem, model.indices ) );
 
-			struct ConstantBuffer2
+			struct PixelShaderConstants
 			{
 				struct
 				{
@@ -58,7 +59,7 @@ namespace dx11
 				} face_colors[6];
 			};
 
-			const ConstantBuffer2 constant_buffer2 =
+			const PixelShaderConstants constant_buffer2 =
 			{
 				{
 					{ 1.0f, 0.0f, 1.0f, 1.0f },
@@ -70,7 +71,7 @@ namespace dx11
 				}
 			};
 
-			AddStaticBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(renderSystem, constant_buffer2));
+			AddStaticBind(std::make_unique<PixelConstantBuffer<PixelShaderConstants>>(renderSystem, constant_buffer2));
 
 			const std::vector<D3D11_INPUT_ELEMENT_DESC> input_element_desc =
 			{
@@ -87,6 +88,11 @@ namespace dx11
 		}
 
 		AddBind(std::make_unique<MatrixTransformer>( renderSystem, *this) );
+
+	// Model deformation transform (per instance, not stored as bind):
+
+		DirectX::XMStoreFloat3x3( &m_TransformationMatrix, DirectX::XMMatrixScaling( 1.0f,1.0f,bdist( rng ) )
+	);
 	}
 	
 	void Box::Update(const float32& dt) noexcept
@@ -101,15 +107,15 @@ namespace dx11
 	
 	DirectX::XMMATRIX Box::GetTransformXM() const noexcept
 	{
-	//	return DirectX::XMLoadFloat3x3( &m_TransformationMatrix ) 
-	//		 * DirectX::XMMatrixRotationRollPitchYaw( pitch, yaw, roll )
-	//		 * DirectX::XMMatrixTranslation( radius, 0.0f, 0.0f )
-	//		 * DirectX::XMMatrixRotationRollPitchYaw( theta, phi, chi )
-	//		 * DirectX::XMMatrixTranslation( 0.0f, 0.0f, 20.0f );
-
-		return DirectX::XMMatrixRotationRollPitchYaw( pitch, yaw, roll )
+		return DirectX::XMLoadFloat3x3( &m_TransformationMatrix ) 
+			 * DirectX::XMMatrixRotationRollPitchYaw( pitch, yaw, roll )
 			 * DirectX::XMMatrixTranslation( radius, 0.0f, 0.0f )
 			 * DirectX::XMMatrixRotationRollPitchYaw( theta, phi, chi )
 			 * DirectX::XMMatrixTranslation( 0.0f, 0.0f, 20.0f );
+
+	//	return DirectX::XMMatrixRotationRollPitchYaw( pitch, yaw, roll )
+	//		 * DirectX::XMMatrixTranslation( radius, 0.0f, 0.0f )
+	//		 * DirectX::XMMatrixRotationRollPitchYaw( theta, phi, chi )
+	//		 * DirectX::XMMatrixTranslation( 0.0f, 0.0f, 20.0f );
 	}
 }

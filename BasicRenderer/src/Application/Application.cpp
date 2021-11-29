@@ -8,24 +8,53 @@ namespace dx11
 	Application::Application()
 		: m_Window ( 1050, 450, "DirectX11_Test_Window" )
 	{
-		std::mt19937 rng(std::random_device{}());
-		std::uniform_real_distribution<float32> adist( 0.0f, 3.1415f * 2.0f );
-		std::uniform_real_distribution<float> ddist(0.0f, 3.1415f * 2.0f);
-		std::uniform_real_distribution<float> odist(0.0f, 3.1415f * 0.3f);
-	//	std::uniform_real_distribution<float32> ddist( 0.0f, 3.1415f * 1.0f );
-	//	std::uniform_real_distribution<float32> odist( 0.0f, 3.1415f * 0.08f );
-		std::uniform_real_distribution<float32> rdist( 6.0f, 20.0f );
-
-	//	for (auto i = 0; i < 80; i++)
-		for (auto i = 0; i < 100; i++)
+		class Factory
 		{
-			boxes.push_back(std::make_unique<Box>( m_Window.GetRenderSystem(), 
-				                                   rng, 
-				                                   adist,
-				                                   ddist, 
-				                                   odist, 
-				                                   rdist));
-		}
+		public:
+			Factory(RenderSystem& gfx)
+				:
+				gfx(gfx)
+			{}
+			std::unique_ptr<Drawable> operator()()
+			{
+				switch (typedist(rng))
+				{
+				case 0:
+					return std::make_unique<Pyramid>(
+						gfx, rng, adist, ddist,
+						odist, rdist
+						);
+				case 1:
+					return std::make_unique<Box>(
+						gfx, rng, adist, ddist,
+						odist, rdist, bdist
+						);
+				case 2:
+					return std::make_unique<Melon>(
+						gfx, rng, adist, ddist,
+						odist, rdist, longdist, latdist
+						);
+				default:
+					assert(false && "bad drawable type in factory");
+					return {};
+				}
+			}
+		private:
+			RenderSystem& gfx;
+			std::mt19937 rng{ std::random_device{}() };
+			std::uniform_real_distribution<float> adist{ 0.0f,PI_f32 * 2.0f };
+			std::uniform_real_distribution<float> ddist{ 0.0f,PI_f32 * 0.5f };
+			std::uniform_real_distribution<float> odist{ 0.0f,PI_f32 * 0.08f };
+			std::uniform_real_distribution<float> rdist{ 6.0f,20.0f };
+			std::uniform_real_distribution<float> bdist{ 0.4f,3.0f };
+			std::uniform_int_distribution<int> latdist{ 5,20 };
+			std::uniform_int_distribution<int> longdist{ 10,40 };
+			std::uniform_int_distribution<int> typedist{ 0,2 };
+		};
+
+		Factory f(m_Window.GetRenderSystem());
+		drawables.reserve(nDrawables);
+		std::generate_n(std::back_inserter(drawables), nDrawables, f);
 
 		m_Window.GetRenderSystem().SetProjection(DirectX::XMMatrixPerspectiveLH(1.0f, 9.0f / 21.0f, 0.5f, 40.0f));
 	}
@@ -63,41 +92,13 @@ namespace dx11
 
 	void Application::DoFrame()
 	{
-//	// Elapsed time in the window title:
-//
-//		const float time = m_Timer.Peek();
-//
-//		std::ostringstream out_str_stream;
-//
-//		out_str_stream << "Time elapsed: " << std::setprecision( 1 ) << std::fixed << time << "s.";
-//
-//		m_Window.SetTitle( out_str_stream.str() );
-//
-//	// Clearing buffer with the red hue depends on time elapsed:
-//
-//		const float color = std::sin( m_Timer.Peek() ) / 2.0f + 0.5f;
-//
-//		m_Window.GetRenderSystem().ClearBuffer( color * 0.2f , color * 0.2f, color * 0.2f );
-//
-//	// Working on DrawTestTriangle:
-//
-//		m_Window.GetRenderSystem().DrawIndexedTEST( -m_Timer.Peek(), 0.0f, 0.0f );
-//
-//		m_Window.GetRenderSystem().DrawIndexedTEST( m_Timer.Peek(),
-//			                   static_cast<float32>(m_Window.mouse.GetX()) /  525.0f  - 1.0f, 
-//			                  (static_cast<float32>(m_Window.mouse.GetY()) / -225.0f) + 1.0f );
-
-		// TEST
-		auto dt = m_Timer.Mark();
-
+		const auto dt = m_Timer.Mark();
 		m_Window.GetRenderSystem().ClearBuffer(0.07f, 0.0f, 0.12f);
-
-		for (auto& box : boxes)
+		for (auto& d : drawables)
 		{
-			box->Update( dt );
-			box->Draw( m_Window.GetRenderSystem() );
+			d->Update(dt);
+			d->Draw(m_Window.GetRenderSystem());
 		}
-
 		m_Window.GetRenderSystem().EndFrame();
 	}
 

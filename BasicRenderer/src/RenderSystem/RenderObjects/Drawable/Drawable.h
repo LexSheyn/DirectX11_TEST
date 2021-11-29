@@ -3,6 +3,7 @@
 
 #include "../../RenderSystem.h"
 
+#include "../Bindable/Bindable.h"
 #include "../Bindable/IndexBuffer.h"
 
 class Bindable;

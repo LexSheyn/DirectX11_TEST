@@ -135,6 +135,15 @@
     <ClCompile Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Sphere.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\RenderSystem\RenderObjects\Drawable\Objects\Melon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderSystem\RenderObjects\Drawable\Objects\Pyramid.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Cone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\PrecompiledHeaders\stdafx.h">
@@ -263,6 +272,15 @@
     <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Objects\Melon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Objects\Pyramid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Cone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BasicRenderer.rc">
@@ -286,7 +304,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="src\RenderSystem\Shaders\VertexShader.hlsl" />
-    <FxCompile Include="src\RenderSystem\Shaders\PixelShader.hlsl" />
+    <FxCompile Include="src\RenderSystem\Shaders\ColorBlendPixelShader.hlsl" />
+    <FxCompile Include="src\RenderSystem\Shaders\ColorBlendVertexShader.hlsl" />
+    <FxCompile Include="src\RenderSystem\Shaders\ColorIndexPixelShader.hlsl" />
+    <FxCompile Include="src\RenderSystem\Shaders\ColorIndexVertexShader.hlsl" />
   </ItemGroup>
 </Project>

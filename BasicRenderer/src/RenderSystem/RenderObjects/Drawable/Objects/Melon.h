@@ -1,5 +1,5 @@
-#ifndef BOX_H
-#define BOX_H
+#ifndef MELON_H
+#define MELON_H
 
 #include "../DrawableBase.h"
 
@@ -13,23 +13,24 @@
 
 namespace dx11
 {
-	class Box : public DrawableBase<Box>
+	class Melon : public DrawableBase<Melon>
 	{
 	public:
 
 	// Constructors and Destructor:
 
-		Box( RenderSystem& renderSystem,
-			 std::mt19937& rng,
-			 std::uniform_real_distribution<float32>& adist,
-			 std::uniform_real_distribution<float32>& ddist,
-			 std::uniform_real_distribution<float32>& odist,
-			 std::uniform_real_distribution<float32>& rdist,
-			 std::uniform_real_distribution<float32>& bdist  );
+		Melon( RenderSystem& renderSystem,
+			   std::mt19937& randomizer,
+			   std::uniform_real_distribution<float32>& adist,
+			   std::uniform_real_distribution<float32>& ddist,
+			   std::uniform_real_distribution<float32>& odist,
+			   std::uniform_real_distribution<float32>& rdist,
+			   std::uniform_int_distribution<int32>& longdist,
+			   std::uniform_int_distribution<int32>& latdist  );
 
 	// Functions:
 
-		void Update( const float32& dt ) noexcept override;
+		void Update( const float& dt ) noexcept override;
 
 	// Accessors:
 
@@ -49,7 +50,7 @@ namespace dx11
 		float32 phi;
 		float32 chi;
 
-	// Speed ( delta/s ):
+	// Speed (delta/s):
 
 		float32 droll;
 		float32 dpitch;
@@ -58,11 +59,7 @@ namespace dx11
 		float32 dtheta;
 		float32 dphi;
 		float32 dchi;
-
-	// Model transform:
-
-		DirectX::XMFLOAT3X3 m_TransformationMatrix;
 	};
 }
 
-#endif // BOX_H
+#endif // MELON_H

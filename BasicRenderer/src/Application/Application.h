@@ -5,6 +5,8 @@
 #include "../Timer/Timer.h"
 
 #include "../RenderSystem/RenderObjects/Drawable/Objects/Box.h"
+#include "../RenderSystem/RenderObjects/Drawable/Objects/Pyramid.h"
+#include "../RenderSystem/RenderObjects/Drawable/Objects/Melon.h"
 
 namespace dx11
 {
@@ -33,8 +35,11 @@ namespace dx11
 		Window m_Window;
 		Timer  m_Timer;
 
-		// TEST
-		std::vector<std::unique_ptr<class Box>> boxes;
+	// TEST:
+
+		std::vector<std::unique_ptr<class Drawable>> drawables;
+
+		static constexpr size_t nDrawables = 180;
 	};
 }
 

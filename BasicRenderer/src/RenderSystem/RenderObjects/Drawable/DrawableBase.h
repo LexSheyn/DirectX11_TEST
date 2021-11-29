@@ -3,6 +3,11 @@
 
 #include "Drawable.h"
 
+#include "Primitives/Sphere.h"
+#include "Primitives/Prism.h"
+#include "Primitives/Cube.h"
+#include "Primitives/Cone.h"
+
 namespace dx11
 {
 	template<class T>
