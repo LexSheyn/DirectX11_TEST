@@ -12,6 +12,10 @@
 #include "../../Bindable/VertexBuffer.h"
 #include "../../Bindable/VertexShader.h"
 
+#include "../Primitives/Sphere.h"
+#include "../Primitives/Prism.h"
+#include "../Primitives/Cube.h"
+
 namespace dx11
 {
 	class Box : public DrawableBase<Box>
@@ -58,6 +62,10 @@ namespace dx11
 		float32 dtheta;
 		float32 dphi;
 		float32 dchi;
+
+	// Model transform:
+
+	//	DirectX::XMFLOAT3X3 m_TransformationMatrix;
 	};
 }
 

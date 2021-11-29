@@ -90,7 +90,7 @@ namespace dx11
 		template<class V>
 		static IndexedTriangleList<V> Make()
 		{
-			return this->MakeTesselated<V>( 1, 1 );
+			return MakeTesselated<V>( 1, 1 );
 		}
 	};
 }

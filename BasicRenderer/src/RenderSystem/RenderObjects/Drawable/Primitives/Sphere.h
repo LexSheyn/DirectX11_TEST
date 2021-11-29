@@ -5,7 +5,7 @@
 
 namespace dx11
 {
-	class Shpere
+	class Sphere
 	{
 	public:
 
@@ -99,7 +99,7 @@ namespace dx11
 
 				indices.push_back( func_CalculateIndex( lattitudeDiv - 2, iLong + 1u ) );
 				indices.push_back( func_CalculateIndex( lattitudeDiv - 2, iLong ) );
-				indices.push_back( func_CalculateIndex( iSouthPole ) );
+				indices.push_back( iSouthPole );
 			}
 
 		// Wrap triangles:
@@ -113,7 +113,7 @@ namespace dx11
 
 			indices.push_back( func_CalculateIndex( lattitudeDiv - 2, 0 ) );
 			indices.push_back( func_CalculateIndex( lattitudeDiv - 2, longitudeDiv - 1 ) );
-			indices.push_back( func_CalculateIndex( iSouthPole ) );
+			indices.push_back( iSouthPole );
 
 			return { std::move( vertices ), std::move( indices ) };
 		}
@@ -121,7 +121,7 @@ namespace dx11
 		template <class V>
 		static IndexedTriangleList<V> Make()
 		{
-			return this->MakeTesselated( 12, 24 );
+			return MakeTesselated<V>( 12, 24 );
 		}
 	};
 }
