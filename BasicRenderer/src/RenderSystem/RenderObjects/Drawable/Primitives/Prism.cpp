@@ -1,2 +1,2 @@
 #include "../../../../PrecompiledHeaders/stdafx.h"
-#include "Cube.h"
+#include "Prism.h"

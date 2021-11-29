@@ -96,6 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Math\Math.cpp" />
     <ClCompile Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Cube.cpp">
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
@@ -179,6 +180,10 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Prism.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="src\RenderSystem\RenderSystem.cpp" />
     <ClCompile Include="src\InputDevices\Mouse\Interface\IMouse.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
@@ -222,6 +227,7 @@
     <ClCompile Include="src\Window\WindowException.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Math\Math.h" />
     <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Cube.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="src\Application\Application.h" />
@@ -247,6 +253,7 @@
     <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\DrawableBase.h" />
     <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\IndexedTriangleList.h" />
     <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Plane.h" />
+    <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Prism.h" />
     <ClInclude Include="src\RenderSystem\RenderSystem.h" />
     <ClInclude Include="src\InputDevices\Mouse\Interface\IMouse.h" />
     <ClInclude Include="src\InputDevices\Keyboard\KeyEvent.h" />

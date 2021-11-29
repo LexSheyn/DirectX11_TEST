@@ -1,6 +1,8 @@
 #ifndef INDEXEDTRIANGLELIST_H
 #define INDEXEDTRIANGLELIST_H
 
+#include "../../../../Math/Math.h"
+
 namespace dx11
 {
 	template<class T>
@@ -11,7 +13,9 @@ namespace dx11
 	// Constructors and Destructor:
 
 		IndexedTriangleList() = default;
-		IndexedTrinagleList( std::vector<T> vertices_in, std::vector<uint16> indices_in )
+		IndexedTriangleList( std::vector<T> vertices_in, std::vector<uint16> indices_in )
+			: vertices( std::move( vertices_in ) ),
+			  indices( std::move( indices_in ) )
 		{
 			assert( vertices.size() > 2u );
 
@@ -20,7 +24,7 @@ namespace dx11
 
 	// Functions:
 
-		void Transform( DirectX::FXMATRIX matrix )
+		void Transform( DirectX::FXMMATRIX matrix )
 		{
 			for ( auto& vertex: vertices )
 			{

@@ -12,7 +12,7 @@ namespace dx11
 		template<class V>
 		static IndexedTriangleList<V> Make()
 		{
-			constexpr float32 size = 1.0f / 2.0f;
+			constexpr float32 side = 1.0f / 2.0f;
 
 			std::vector<DirectX::XMFLOAT3> vertices_one;
 
@@ -27,7 +27,7 @@ namespace dx11
 
 			std::vector<V> vertices( vertices_one.size() );
 
-			for ( size_t i = 0u, i < vertices_one.size(); i++ )
+			for ( size_t i = 0u; i < vertices_one.size(); i++ )
 			{
 				vertices[i].position = vertices_one[i];
 			}
