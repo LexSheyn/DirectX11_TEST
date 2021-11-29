@@ -44,7 +44,84 @@ namespace dx11
 
 		// Add the cap vertices:
 
-			// 39
+			const auto iNorthPole = static_cast<uint16>( vertices.size() );
+
+			vertices.emplace_back();
+
+			DirectX::XMStoreFloat3( &vertices.back().position, base );
+
+			const auto iSouthPole = static_cast<uint16>( vertices.size() );
+
+			vertices.emplace_back();
+
+			DirectX::XMStoreFloat3( &vertices.back().position, DirectX::XMVectorNegate( base ) );
+
+			const auto func_CalculateIndex = [lattitudeDiv, longitudeDiv]( uint16 iLat, uint16 iLong )
+			{
+				return iLat * longitudeDiv + iLong;
+			};
+
+			std::vector<uint16> indices;
+
+			for ( uint16 iLat = 0u; iLat < static_cast<uint16>(lattitudeDiv - 2); iLat++ )
+			{
+				for ( uint16 iLong = 0u; iLong < static_cast<uint16>(longitudeDiv - 1); iLong++ )
+				{
+					indices.push_back( func_CalculateIndex( iLat, iLong ) );
+					indices.push_back( func_CalculateIndex( iLat + 1u, iLong ) );
+					indices.push_back( func_CalculateIndex( iLat, iLong + 1u ) );
+					indices.push_back( func_CalculateIndex( iLat, iLong + 1u ) );
+					indices.push_back( func_CalculateIndex( iLat + 1u, iLong ) );
+					indices.push_back( func_CalculateIndex( iLat + 1u, iLong + 1u ) );
+				}
+
+			// Wrap band:
+
+				indices.push_back( func_CalculateIndex( iLat, longitudeDiv - 1 ) );
+				indices.push_back( func_CalculateIndex( iLat + 1u, longitudeDiv - 1 ) );
+				indices.push_back( func_CalculateIndex( iLat, 0u ) );
+				indices.push_back( func_CalculateIndex( iLat, 0u ) );
+				indices.push_back( func_CalculateIndex( iLat + 1u, longitudeDiv - 1 ) );
+				indices.push_back( func_CalculateIndex( iLat + 1u, 0u ) );
+			}
+
+		// Cap fans:
+
+			for ( uint16 iLong = 0u; iLong < longitudeDiv - 1u; iLong++ )
+			{
+			// North:
+
+				indices.push_back( iNorthPole );
+				indices.push_back( func_CalculateIndex( 0u, iLong ) );
+				indices.push_back( func_CalculateIndex( 0u, iLong + 1u ) );
+
+			// South:
+
+				indices.push_back( func_CalculateIndex( lattitudeDiv - 2, iLong + 1u ) );
+				indices.push_back( func_CalculateIndex( lattitudeDiv - 2, iLong ) );
+				indices.push_back( func_CalculateIndex( iSouthPole ) );
+			}
+
+		// Wrap triangles:
+		// North:
+
+			indices.push_back( iNorthPole );
+			indices.push_back( func_CalculateIndex( 0, longitudeDiv - 1	 ) );
+			indices.push_back( func_CalculateIndex( 0, 0 ) );
+
+		// South:
+
+			indices.push_back( func_CalculateIndex( lattitudeDiv - 2, 0 ) );
+			indices.push_back( func_CalculateIndex( lattitudeDiv - 2, longitudeDiv - 1 ) );
+			indices.push_back( func_CalculateIndex( iSouthPole ) );
+
+			return { std::move( vertices ), std::move( indices ) };
+		}
+
+		template <class V>
+		static IndexedTriangleList<V> Make()
+		{
+			return this->MakeTesselated( 12, 24 );
 		}
 	};
 }
