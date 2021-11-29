@@ -9,6 +9,8 @@ namespace dx11
 	{
 	public:
 
+	// Functions:
+
 		template<class V>
 		static IndexedTriangleList<V> MakeTesselated( int32 divisions_x, int32 divisions_y )
 		{

@@ -9,8 +9,10 @@ namespace dx11
 	{
 	public:
 
+	// Functions:
+
 		template <class V>
-		static IndexedTriangleList<V> MakeTesselate( int32 longDiv )
+		static IndexedTriangleList<V> MakeTesselated( int32 longDiv )
 		{
 			assert( longDiv >= 3 );
 
@@ -81,7 +83,27 @@ namespace dx11
 
 		// Base indices:
 
+			for ( uint16 iLong = 0u; iLong < longDiv; iLong++ )
+			{
+				const auto i = iLong * 2;
 
+				const auto mod = longDiv * 2;
+
+				indices.push_back(  i + 2 );
+				indices.push_back( iCenterNear );
+				indices.push_back( (i + 2) % mod + 2 );
+				indices.push_back( iCenterFar );
+				indices.push_back(  i + 1 + 2 );
+				indices.push_back( (i + 3) % mod + 2 );
+			}
+
+			return { std::move( vertices ), std::move( indices ) };
+		}
+
+		template <class V>
+		static IndexedTriangleList<V> Make()
+		{
+			return this->MakeTesselated<V>( 24 );
 		}
 	};
 }

@@ -184,6 +184,10 @@
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Sphere.cpp">
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../PrecompiledHeaders/stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
     <ClCompile Include="src\RenderSystem\RenderSystem.cpp" />
     <ClCompile Include="src\InputDevices\Mouse\Interface\IMouse.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
@@ -254,6 +258,7 @@
     <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\IndexedTriangleList.h" />
     <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Plane.h" />
     <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Prism.h" />
+    <ClInclude Include="src\RenderSystem\RenderObjects\Drawable\Primitives\Sphere.h" />
     <ClInclude Include="src\RenderSystem\RenderSystem.h" />
     <ClInclude Include="src\InputDevices\Mouse\Interface\IMouse.h" />
     <ClInclude Include="src\InputDevices\Keyboard\KeyEvent.h" />

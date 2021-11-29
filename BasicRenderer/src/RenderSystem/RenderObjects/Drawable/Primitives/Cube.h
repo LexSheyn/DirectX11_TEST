@@ -8,6 +8,8 @@ namespace dx11
 	class Cube
 	{
 	public:
+		
+	// Functions:
 
 		template<class V>
 		static IndexedTriangleList<V> Make()
